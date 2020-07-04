@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "409929402160",
+    "firebase_url": "https://covid-tracker-c08ad.firebaseio.com",
+    "project_id": "covid-tracker-c08ad",
+    "storage_bucket": "covid-tracker-c08ad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:409929402160:android:89bcf0444c7b52d7a12af5",
+        "android_client_info": {
+          "package_name": "com.example.wellsafe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "409929402160-h4t6bhka8eccb5ei1ub10vnm8q05bu5q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMaZ3SBbYh-Iqc63C3CoH5sO03RKlwcyw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "409929402160-h4t6bhka8eccb5ei1ub10vnm8q05bu5q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
