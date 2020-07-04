@@ -6,6 +6,57 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/login_view"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/login" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:orientation="horizontal"
+        >
+        <androidx.cardview.widget.CardView
+            android:id="@+id/todayStats"
+            android:layout_width="160dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginLeft="30dp"
+            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="@color/colorPrimary"
+            >
+            <TextView
+                android:id="@+id/totalCases"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="20dp"
+                android:text="100"
+                android:textSize="40dp"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/totalStats"
+            android:layout_width="160dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@+id/todayStats"
+            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="@color/colorPrimary"
+            />
+
+    </LinearLayout>
+
+
+
+
+
     <TextView
         android:id="@+id/text_home"
         android:layout_width="match_parent"

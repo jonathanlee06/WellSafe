@@ -25,8 +25,9 @@
     <string name="nav_header_desc">Navigation header</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_stats">Statistics</string>
+    <string name="menu_checkin">Check-In</string>
+    <string name="menu_profile">Profile</string>
     <string name="title_activity_home">MainActivity</string>
     <string name="title_home">Home</string>
     <string name="title_stats">Statistics</string>
