@@ -8,6 +8,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.wellsafe.R;
 import com.example.wellsafe.api.FetchData;
 
@@ -30,25 +36,71 @@ public class HomeFragment extends Fragment {
     public static String inputData;
     View view;
     TextView totalCases;
+    JSONObject malaysiaData;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        FetchData process  = new FetchData();
-        process.execute();
-        view = inflater.inflate(R.layout.fragment_home, container, false);
-        totalCases = (TextView) view.findViewById(R.id.totalCases);
         try {
             get_json();
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        view = inflater.inflate(R.layout.fragment_home, container, false);
         return view;
     }
 
-    public void get_json() throws JSONException {
-            JSONObject jsonObject = new JSONObject(inputData);
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        try {
+            get_json();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void get_json() throws JSONException {
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        String URL = "https://covid2019-api.herokuapp.com/v2/country/malaysia";
+
+        JsonObjectRequest objectRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                URL,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //Log.e("API Response", response.toString());
+                        try {
+                            malaysiaData = response.getJSONObject("data");
+                            totalCases = (TextView) getActivity().findViewById(R.id.totalCases);
+                            String country = malaysiaData.getString("location");
+                            int confirmed = malaysiaData.getInt("confirmed");
+                            //Log.e("location response", malaysiaData.getString("data"));
+                            totalCases.setText(String.valueOf(confirmed));
+                            //confirmedNum = data.getInt("deaths");
+                            //String country = data.getString("location");
+                            //Log.e("API Response 2", country);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Error", error.toString());
+                    }
+                }
+        );
+
+        requestQueue.add(objectRequest);
+
+        /*    JSONObject jsonObject = new JSONObject(inputData);
             JSONObject malaysiaData = jsonObject.getJSONObject("data");
 
             //totalCases.setText(malaysiaData.getString("confirmed"));

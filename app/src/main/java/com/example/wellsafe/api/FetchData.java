@@ -1,6 +1,7 @@
 package com.example.wellsafe.api;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.wellsafe.ui.home.HomeFragment;
 import com.example.wellsafe.ui.stats.StatsFragment;
@@ -44,6 +45,7 @@ public class FetchData extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-            HomeFragment.inputData = this.data;
+        Log.e("API from api", this.data);
+            //HomeFragment.inputData = this.data;
     }
 }
