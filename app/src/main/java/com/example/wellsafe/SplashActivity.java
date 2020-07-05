@@ -13,10 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.wellsafe.api.FetchData;
-import com.example.wellsafe.font.FontActivity;
 import com.example.wellsafe.ui.home.HomeFragment;
-import com.example.wellsafe.ui.stats.StatsFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -67,7 +64,7 @@ public class SplashActivity extends AppCompatActivity {
                 if(!backPressToExit){
                     if(userFirebase == null){
                         //not logged in, launch the login activity
-                        loadLogInView();
+                        loadSignUpView();
                     } else {
                         loadHomeView();
                     }
@@ -159,6 +156,13 @@ public class SplashActivity extends AppCompatActivity {
 
     private void loadLogInView() {
         Intent intent = new Intent(this, LogInActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+    private void loadSignUpView() {
+        Intent intent = new Intent(this, SignUpActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

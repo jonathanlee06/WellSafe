@@ -19,4 +19,14 @@
         android:textAlignment="center"
         android:textSize="20sp"
          />
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/text_dashboard"
+        android:layout_centerHorizontal="true"
+        android:text="Logout"
+        />
+
 </RelativeLayout>
