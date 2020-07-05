@@ -37,29 +37,33 @@ public class HomeFragment extends Fragment {
     View view;
     TextView totalCases;
     JSONObject malaysiaData;
+    public static int confirmed;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        try {
+        /* try {
             get_json();
 
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        } */
         view = inflater.inflate(R.layout.fragment_home, container, false);
+        totalCases = (TextView) view.findViewById(R.id.totalCases);
+        totalCases.setText(String.valueOf(confirmed));
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        try {
+        /* try {
             get_json();
 
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        } */
     }
 
     private void get_json() throws JSONException {
@@ -76,11 +80,11 @@ public class HomeFragment extends Fragment {
                         //Log.e("API Response", response.toString());
                         try {
                             malaysiaData = response.getJSONObject("data");
-                            totalCases = (TextView) getActivity().findViewById(R.id.totalCases);
+                            //totalCases = (TextView) getActivity().findViewById(R.id.totalCases);
                             String country = malaysiaData.getString("location");
-                            int confirmed = malaysiaData.getInt("confirmed");
+                            confirmed = malaysiaData.getInt("confirmed");
                             //Log.e("location response", malaysiaData.getString("data"));
-                            totalCases.setText(String.valueOf(confirmed));
+                            //totalCases.setText(String.valueOf(confirmed));
                             //confirmedNum = data.getInt("deaths");
                             //String country = data.getString("location");
                             //Log.e("API Response 2", country);

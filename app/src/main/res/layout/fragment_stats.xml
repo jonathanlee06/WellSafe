@@ -7,16 +7,67 @@
     android:background="#fff"
     tools:context=".ui.stats.StatsFragment">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/login_view"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/login" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:orientation="horizontal"
+        >
+        <androidx.cardview.widget.CardView
+            android:id="@+id/todayStatsS"
+            android:layout_width="160dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginLeft="30dp"
+            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="@color/colorPrimary"
+            >
+            <TextView
+                android:id="@+id/totalCases"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="20dp"
+                android:text=" "
+                android:textSize="40dp"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/totalStats"
+            android:layout_width="160dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginLeft="30dp"
+            android:layout_toRightOf="@+id/todayStats"
+            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="@color/colorPrimary"
+            />
+
+    </LinearLayout>
+
+
+
+
+
     <TextView
-        android:id="@+id/text_gallery"
+        android:id="@+id/text_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_centerVertical="true"
-        android:text="This is statistics"
+        android:text="This is stats"
         android:textAlignment="center"
         android:textSize="20sp"
-         />
+        />
 </RelativeLayout>

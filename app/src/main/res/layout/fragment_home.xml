@@ -19,13 +19,13 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:orientation="horizontal"
+        android:padding="20dp"
         >
         <androidx.cardview.widget.CardView
             android:id="@+id/todayStats"
             android:layout_width="160dp"
             android:layout_height="100dp"
             android:layout_marginTop="150dp"
-            android:layout_marginLeft="30dp"
             app:cardCornerRadius="20dp"
             app:cardBackgroundColor="@color/colorPrimary"
             >

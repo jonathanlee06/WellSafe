@@ -8,6 +8,7 @@ import com.example.wellsafe.ui.stats.StatsFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,6 +20,8 @@ import java.net.URL;
 
 public class FetchData extends AsyncTask<Void, Void, Void> {
     String data;
+    String location;
+    int confirmed;
 
     @Override
     protected Void doInBackground(Void... voids) {
@@ -33,9 +36,16 @@ public class FetchData extends AsyncTask<Void, Void, Void> {
                 data = data + line;
             }
 
+            JSONObject caseData = new JSONObject(data);
+            JSONObject malaysiaData = caseData.getJSONObject("data");
+            confirmed = malaysiaData.getInt("confirmed");
+            location = malaysiaData.getString("location");
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -45,7 +55,7 @@ public class FetchData extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        Log.e("API from api", this.data);
+        Log.e("API from api", String.valueOf(this.confirmed));
             //HomeFragment.inputData = this.data;
     }
 }
