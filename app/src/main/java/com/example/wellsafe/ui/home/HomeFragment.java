@@ -20,6 +20,7 @@ import com.example.wellsafe.api.FetchData;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class HomeFragment extends Fragment {
     TextView totalCases;
     JSONObject malaysiaData;
     public static int confirmed;
+    public static int recovered;
 
 
     @Nullable
@@ -51,7 +53,9 @@ public class HomeFragment extends Fragment {
         } */
         view = inflater.inflate(R.layout.fragment_home, container, false);
         totalCases = (TextView) view.findViewById(R.id.totalCases);
+        TextView totalRecoveries = (TextView) view.findViewById(R.id.totalRecoveries);
         totalCases.setText(String.valueOf(confirmed));
+        totalRecoveries.setText(String.valueOf(recovered));
         return view;
     }
 

@@ -14,6 +14,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wellsafe.api.FetchData;
+import com.example.wellsafe.font.FontActivity;
 import com.example.wellsafe.ui.home.HomeFragment;
 import com.example.wellsafe.ui.stats.StatsFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -121,6 +122,7 @@ public class SplashActivity extends AppCompatActivity {
                             //totalCases = (TextView) getActivity().findViewById(R.id.totalCases);
                             String country = malaysiaData.getString("location");
                             HomeFragment.confirmed = malaysiaData.getInt("confirmed");
+                            HomeFragment.recovered = malaysiaData.getInt("recovered");
                             //Log.e("location response", malaysiaData.getString("data"));
                             //totalCases.setText(String.valueOf(confirmed));
                             //confirmedNum = data.getInt("deaths");

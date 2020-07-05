@@ -4,25 +4,93 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/back"
     tools:context=".ui.home.HomeFragment">
 
-    <ImageView
+    <TextView
+        android:id="@+id/homeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/login_view"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/login" />
+        android:padding="20dp"
+        android:layout_margin="10dp"
+        android:text="WellSafe"
+        android:textSize="30dp"
+        android:textColor="#fff"
 
+        />
+
+    
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="120dp"
+        android:padding="10dp"
+        android:rowCount="1"
+        android:columnCount="2"
+        >
+        <androidx.cardview.widget.CardView
+            android:id="@+id/todayStats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_gravity="fill"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="10dp"
+            app:cardBackgroundColor="#fff"
+            >
+
+            <TextView
+                android:id="@+id/totalCases"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="20dp"
+                android:text=" "
+                android:textSize="30dp"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/todayStats2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_gravity="fill"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="10dp"
+            app:cardBackgroundColor="#fff"
+            >
+
+            <TextView
+                android:id="@+id/totalRecoveries"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="20dp"
+                android:text=" "
+                android:textSize="30dp"
+                />
+
+        </androidx.cardview.widget.CardView>
+
+
+    </GridLayout>
+    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:orientation="horizontal"
         android:padding="20dp"
         >
-        <androidx.cardview.widget.CardView
-            android:id="@+id/todayStats"
+        <!--<androidx.cardview.widget.CardView
+            android:id="@+id/todayStats1"
             android:layout_width="160dp"
             android:layout_height="100dp"
             android:layout_marginTop="150dp"
@@ -30,7 +98,7 @@
             app:cardBackgroundColor="@color/colorPrimary"
             >
             <TextView
-                android:id="@+id/totalCases"
+                android:id="@+id/totalCases1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="20dp"
@@ -38,9 +106,9 @@
                 android:textSize="40dp"
                 />
 
-        </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>-->
 
-        <androidx.cardview.widget.CardView
+        <!--<androidx.cardview.widget.CardView
             android:id="@+id/totalStats"
             android:layout_width="160dp"
             android:layout_height="100dp"
@@ -49,7 +117,7 @@
             android:layout_toRightOf="@+id/todayStats"
             app:cardCornerRadius="20dp"
             app:cardBackgroundColor="@color/colorPrimary"
-            />
+            />-->
 
     </LinearLayout>
 
