@@ -20,6 +20,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.hbb20.CountryCodePicker;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -29,9 +30,11 @@ public class SignUpActivity extends AppCompatActivity {
     protected EditText fullNameEditText;
     protected TextView loginTextView;
     protected Button signupButton;
+    protected CountryCodePicker countryCode;
     private FirebaseAuth authFirebase;
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
         phoneEditText = (EditText) findViewById(R.id.phoneNumberField);
         fullNameEditText = (EditText) findViewById(R.id.fullNameField);
         signupButton = (Button) findViewById(R.id.signupButton);
+        countryCode = (CountryCodePicker) findViewById(R.id.countryCode);
 
         loginTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,11 +73,15 @@ public class SignUpActivity extends AppCompatActivity {
                 final String email = emailEditText.getText().toString();
                 final String password = passwordEditText.getText().toString();
                 final String phone = phoneEditText.getText().toString();
+                final String phoneNumber;
 
                 fullName.trim();
                 password.trim();
                 email.trim();
                 phone.trim();
+
+                countryCode.registerCarrierNumberEditText(phoneEditText);
+                phoneNumber = countryCode.getFullNumberWithPlus();
 
                 if (email.isEmpty() || password.isEmpty() || fullName.isEmpty() || phone.isEmpty()){
                     AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
@@ -90,7 +98,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task){
                                     if(task.isSuccessful()){
 
-                                        Users userData = new Users(fullName, email, password, phone);
+                                        Users userData = new Users(fullName, email, phoneNumber);
                                         FirebaseDatabase.getInstance().getReference("Users")
                                                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                                 .child("User Information")
@@ -122,6 +130,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
     }
+
 
     @Override
     public void onBackPressed() {

@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.example.wellsafe.R;
 import com.google.zxing.Result;
 
+import org.json.JSONException;
+
 import java.util.Scanner;
 
 public class CheckInCamera extends AppCompatActivity implements ZXingScannerView.ResultHandler {
@@ -21,6 +23,11 @@ public class CheckInCamera extends AppCompatActivity implements ZXingScannerView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        try
+        {
+            this.getSupportActionBar().hide();
+        }
+        catch (NullPointerException e){}
         ScannerView = new ZXingScannerView(this);
         setContentView(ScannerView);
 

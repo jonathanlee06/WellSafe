@@ -15,7 +15,7 @@
     <string name="login_error_message">Please make sure you enter an email address and password</string>
     <string name="login_error_title">Error!</string>
     <string name="login_text">Already have an account? Click here to login</string>
-    <string name="signup_text">Click Here to Sign Up</string>
+    <string name="signup_text">Don\'t have an account? Click Here to Sign Up</string>
     <string name="title_activity_login">Sign In</string>
     <string name="add_item">Add New Item</string>
     <string name="action_logout">Logout</string>

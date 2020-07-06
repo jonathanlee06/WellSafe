@@ -35,7 +35,7 @@
 
         <EditText
             android:id="@+id/fullNameField"
-            android:layout_width="300dp"
+            android:layout_width="330dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_alignParentLeft="true"
@@ -55,7 +55,7 @@
 
         <EditText
             android:id="@+id/emailField"
-            android:layout_width="300dp"
+            android:layout_width="330dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_alignParentLeft="true"
@@ -74,7 +74,7 @@
 
         <EditText
             android:id="@+id/passwordField"
-            android:layout_width="300dp"
+            android:layout_width="330dp"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/emailField"
             android:layout_below="@id/emailField"
@@ -96,20 +96,26 @@
             android:orientation="horizontal"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
+            android:padding="2dp"
+            android:background="@drawable/edit"
             >
 
-            <!--<com.hbb20.CountryCodePicker
-                android:layout_width="150dp"
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/countryCode"
+                android:layout_width="110dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
+                android:padding="6dp"
                 android:gravity="center"
+                app:ccp_showFlag="false"
+                app:ccp_countryPreference="MY"
                 app:ccp_defaultNameCode="MY"
 
-                />-->
+                />
 
             <EditText
                 android:id="@+id/phoneNumberField"
-                android:layout_width="300dp"
+                android:layout_width="210dp"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@id/passwordField"
                 android:layout_below="@id/passwordField"
@@ -117,10 +123,11 @@
                 android:ems="10"
                 android:hint="@string/phone_hint"
                 android:inputType="phone"
-                android:drawableLeft="@drawable/ic_baseline_phone_24"
-                android:drawablePadding="10dp"
-                android:background="@drawable/edit"
-                android:padding="15dp"
+                android:background="#fff"
+                android:padding="7dp"
+                android:layout_marginRight="10dp"
+
+
                 >
             </EditText>
 
@@ -130,7 +137,7 @@
 
         <Button
             android:id="@+id/signupButton"
-            android:layout_width="300dp"
+            android:layout_width="330dp"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/passwordField"
             android:layout_below="@id/passwordField"
