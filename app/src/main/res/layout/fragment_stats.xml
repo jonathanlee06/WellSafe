@@ -72,7 +72,7 @@
                         android:textSize="20dp" />
 
                     <TextView
-                        android:id="@+id/statsTotalCases"
+                        android:id="@+id/malaysiaTotalCase"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="10dp"
@@ -121,7 +121,7 @@
                         android:textSize="20dp" />
 
                     <TextView
-                        android:id="@+id/statsTotalRecoveries"
+                        android:id="@+id/malaysiaTotalRecovered"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:layout_marginTop="10dp"
@@ -170,14 +170,14 @@
                         android:textSize="20dp" />
 
                     <TextView
-                        android:id="@+id/statsTotalDeaths"
+                        android:id="@+id/malaysiaTotalDeaths"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:fontFamily="@font/product_sans_bold"
                         android:textAlignment="center"
-                        android:textColor="#2E7D32"
+                        android:textColor="#000000"
                         android:text="100"
                         android:textSize="30dp" />
                 </LinearLayout>
@@ -215,18 +215,18 @@
                         android:layout_height="20dp"
                         android:fontFamily="@font/product_sans_regular"
                         android:textAlignment="center"
-                        android:text="Total Deaths"
+                        android:text="Total Active"
                         android:textSize="20dp" />
 
                     <TextView
-                        android:id="@+id/statsTotalActive"
+                        android:id="@+id/malaysiaTotalActive"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
                         android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:fontFamily="@font/product_sans_bold"
                         android:textAlignment="center"
-                        android:textColor="#2E7D32"
+                        android:textColor="#FF8F00"
                         android:text="100"
                         android:textSize="30dp" />
                 </LinearLayout>

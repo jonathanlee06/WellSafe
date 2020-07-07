@@ -100,7 +100,7 @@ public class HomeActivity extends AppCompatActivity {
                             malaysiaData = response.getJSONObject("data");
                             //totalCases = (TextView) getActivity().findViewById(R.id.totalCases);
                             String country = malaysiaData.getString("location");
-                            StatsFragment.confirmed = malaysiaData.getInt("confirmed");
+                            //StatsFragment.confirmed = malaysiaData.getInt("confirmed");
                             //Log.e("location response", malaysiaData.getString("data"));
                             //totalCases.setText(String.valueOf(confirmed));
                             //confirmedNum = data.getInt("deaths");

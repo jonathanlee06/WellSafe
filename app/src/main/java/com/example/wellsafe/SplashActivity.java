@@ -14,6 +14,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wellsafe.ui.home.HomeFragment;
+import com.example.wellsafe.ui.stats.StatsFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -120,11 +121,12 @@ public class SplashActivity extends AppCompatActivity {
                             String country = malaysiaData.getString("location");
                             HomeFragment.confirmed = malaysiaData.getInt("confirmed");
                             HomeFragment.recovered = malaysiaData.getInt("recovered");
+                            StatsFragment.confirmed = malaysiaData.getInt("confirmed");
+                            StatsFragment.recovered = malaysiaData.getInt("recovered");
+                            StatsFragment.deaths = malaysiaData.getInt("deaths");
+                            StatsFragment.active = malaysiaData.getInt("active");
+
                             //Log.e("location response", malaysiaData.getString("data"));
-                            //totalCases.setText(String.valueOf(confirmed));
-                            //confirmedNum = data.getInt("deaths");
-                            //String country = data.getString("location");
-                            //Log.e("API Response 2", country);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
