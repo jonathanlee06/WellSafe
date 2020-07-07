@@ -27,8 +27,8 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".LogInActivity" />
-        <activity android:name=".SignUpActivity" />
+        <activity android:name=".LogInActivity"/>
+        <activity android:name=".SignUpActivity"/>
     </application>
 
     <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES"
