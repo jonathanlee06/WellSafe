@@ -1,13 +1,9 @@
 package com.example.wellsafe;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -15,13 +11,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.wellsafe.api.FetchData;
 import com.example.wellsafe.ui.checkin.CheckInFragment;
 import com.example.wellsafe.ui.home.HomeFragment;
 import com.example.wellsafe.ui.profile.ProfileFragment;
 import com.example.wellsafe.ui.stats.StatsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,10 +24,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -107,8 +97,6 @@ public class HomeActivity extends AppCompatActivity {
                             StatsFragment.recovered = malaysiaData.getInt("recovered");
                             StatsFragment.deaths = malaysiaData.getInt("deaths");
                             StatsFragment.active = malaysiaData.getInt("active");
-
-
 
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -41,15 +41,17 @@ public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        //FetchData process  = new FetchData();
-        //process.execute();
+        try {
+            get_json();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         super.onCreate(savedInstanceState);
         try
         {
             this.getSupportActionBar().hide();
-            get_json();
         }
-        catch (NullPointerException | JSONException e){}
+        catch (NullPointerException e){}
         setContentView(R.layout.activity_splash);
         spinner = (ProgressBar) findViewById(R.id.loading);
 
@@ -125,8 +127,6 @@ public class SplashActivity extends AppCompatActivity {
                             StatsFragment.recovered = malaysiaData.getInt("recovered");
                             StatsFragment.deaths = malaysiaData.getInt("deaths");
                             StatsFragment.active = malaysiaData.getInt("active");
-
-                            //Log.e("location response", malaysiaData.getString("data"));
 
                         } catch (JSONException e) {
                             e.printStackTrace();

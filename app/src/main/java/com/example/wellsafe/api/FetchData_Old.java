@@ -4,9 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.wellsafe.ui.home.HomeFragment;
-import com.example.wellsafe.ui.stats.StatsFragment;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,7 +16,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class FetchData extends AsyncTask<Void, Void, Void> {
+public class FetchData_Old extends AsyncTask<Void, Void, Void> {
     String data;
     String location;
     int confirmed;
@@ -38,7 +36,7 @@ public class FetchData extends AsyncTask<Void, Void, Void> {
 
             JSONObject caseData = new JSONObject(data);
             JSONObject malaysiaData = caseData.getJSONObject("data");
-            confirmed = malaysiaData.getInt("confirmed");
+            HomeFragment.confirmed = malaysiaData.getInt("confirmed");
             location = malaysiaData.getString("location");
 
         } catch (MalformedURLException e) {
