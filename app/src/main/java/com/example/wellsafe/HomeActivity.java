@@ -31,13 +31,14 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         try
         {
             this.getSupportActionBar().hide();
-            //get_json();
+            get_json();
         }
-        catch (NullPointerException e){}
+        catch (NullPointerException | JSONException e){}
+        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_home);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(navListener);
