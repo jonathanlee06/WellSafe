@@ -45,12 +45,13 @@ public class HomeActivity extends AppCompatActivity {
         try
         {
             this.getSupportActionBar().hide();
-            get_json();
+            //get_json();
         }
-        catch (NullPointerException | JSONException e){}
+        catch (NullPointerException e){}
         setContentView(R.layout.activity_home);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(navListener);
+        //new HomeFragment();
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         /* AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -100,12 +101,14 @@ public class HomeActivity extends AppCompatActivity {
                             malaysiaData = response.getJSONObject("data");
                             //totalCases = (TextView) getActivity().findViewById(R.id.totalCases);
                             String country = malaysiaData.getString("location");
-                            //StatsFragment.confirmed = malaysiaData.getInt("confirmed");
-                            //Log.e("location response", malaysiaData.getString("data"));
-                            //totalCases.setText(String.valueOf(confirmed));
-                            //confirmedNum = data.getInt("deaths");
-                            //String country = data.getString("location");
-                            //Log.e("API Response 2", country);
+                            HomeFragment.confirmed = malaysiaData.getInt("confirmed");
+                            HomeFragment.recovered = malaysiaData.getInt("recovered");
+                            StatsFragment.confirmed = malaysiaData.getInt("confirmed");
+                            StatsFragment.recovered = malaysiaData.getInt("recovered");
+                            StatsFragment.deaths = malaysiaData.getInt("deaths");
+                            StatsFragment.active = malaysiaData.getInt("active");
+
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();

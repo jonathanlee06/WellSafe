@@ -16,6 +16,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wellsafe.R;
 import com.example.wellsafe.api.FetchData;
+import com.example.wellsafe.ui.stats.StatsFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +38,7 @@ public class HomeFragment extends Fragment {
     public static String inputData;
     View view;
     TextView totalCases;
+    TextView totalRecoveries;
     JSONObject malaysiaData;
     public static int confirmed;
     public static int recovered;
@@ -45,15 +47,15 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        /* try {
+         /*try {
             get_json();
 
         } catch (JSONException e) {
             e.printStackTrace();
-        } */
+        }*/
         view = inflater.inflate(R.layout.fragment_home, container, false);
         totalCases = (TextView) view.findViewById(R.id.totalCases);
-        TextView totalRecoveries = (TextView) view.findViewById(R.id.totalRecoveries);
+        totalRecoveries = (TextView) view.findViewById(R.id.totalRecoveries);
         totalCases.setText(String.valueOf(confirmed));
         totalRecoveries.setText(String.valueOf(recovered));
         return view;
@@ -87,11 +89,9 @@ public class HomeFragment extends Fragment {
                             //totalCases = (TextView) getActivity().findViewById(R.id.totalCases);
                             String country = malaysiaData.getString("location");
                             confirmed = malaysiaData.getInt("confirmed");
+                            recovered = malaysiaData.getInt("recovered");
+
                             //Log.e("location response", malaysiaData.getString("data"));
-                            //totalCases.setText(String.valueOf(confirmed));
-                            //confirmedNum = data.getInt("deaths");
-                            //String country = data.getString("location");
-                            //Log.e("API Response 2", country);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
