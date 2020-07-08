@@ -69,7 +69,7 @@ public class StatsFragment extends Fragment {
         renderData();*/
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        List<String> xAxisValues = new ArrayList<>(Arrays.asList("2/7", "3/7", "4/7", "5/7", "6/7", "7/7"));
+        List<String> xAxisValues = new ArrayList<>(Arrays.asList("0", "2/7", "3/7", "4/7", "5/7", "6/7", "7/7"));
         List<Entry> incomeEntries = getCases();
         dataSets = new ArrayList<>();
         LineDataSet set1;
@@ -122,7 +122,7 @@ public class StatsFragment extends Fragment {
 
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
-        lineChart.animateX(2000);
+        lineChart.animateX(1000);
         lineChart.invalidate();
         lineChart.getLegend().setEnabled(false);
         lineChart.getDescription().setEnabled(false);
