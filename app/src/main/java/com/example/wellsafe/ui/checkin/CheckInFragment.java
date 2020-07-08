@@ -31,6 +31,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class CheckInFragment extends Fragment implements View.OnClickListener{
 
     public static TextView result;
+    public static TextView identifierResult;
     Button checkIn;
     View view;
     private int CAMERA_PERMISSION_CODE = 1;
@@ -40,6 +41,7 @@ public class CheckInFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view =  inflater.inflate(R.layout.fragment_checkin, container, false);
         result = (TextView) view.findViewById(R.id.result);
+        identifierResult = (TextView) view.findViewById(R.id.identifierResult);
         checkIn = (Button) view.findViewById(R.id.btnScan);
         checkIn.setOnClickListener(this);
         return view;

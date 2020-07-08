@@ -14,7 +14,11 @@ import com.google.zxing.Result;
 
 import org.json.JSONException;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
+import java.util.Calendar;
 
 public class CheckInCamera extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
@@ -36,7 +40,22 @@ public class CheckInCamera extends AppCompatActivity implements ZXingScannerView
 
     @Override
     public void handleResult(Result result) {
-        CheckInFragment.result.setText(result.getText());
+        // Get Date & Time
+        String currentDate = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+        String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+
+        /* String to split. */
+        String res = result.getText();
+
+        String[] temp;
+        String delimiter = "\\r?\\n";
+
+        temp = res.split(delimiter);
+        String identifier = temp[0];
+        String location = temp[1];
+
+        CheckInFragment.result.setText(currentDate);
+        CheckInFragment.identifierResult.setText(currentTime);
         onBackPressed();
     }
 

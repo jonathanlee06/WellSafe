@@ -42,6 +42,8 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(navListener);
+
+
         //new HomeFragment();
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -111,21 +113,9 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 }
         );
-
         requestQueue.add(objectRequest);
-
-        /*    JSONObject jsonObject = new JSONObject(inputData);
-            JSONObject malaysiaData = jsonObject.getJSONObject("data");
-
-            //totalCases.setText(malaysiaData.getString("confirmed"));
-        String confirmed = malaysiaData.getString("confirmed");
-        Log.d("API test", confirmed + " or not");
-
-            //malaysiaList.add(jsonObject.getString("data"));
-            /* malaysiaList.add(jsonObject.getString("deaths"));
-            malaysiaList.add(jsonObject.getString("recovered"));
-            malaysiaList.add(jsonObject.getString("active")); */
     }
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
