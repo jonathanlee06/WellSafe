@@ -121,12 +121,20 @@ public class SplashActivity extends AppCompatActivity {
                             malaysiaData = response.getJSONObject("data");
                             //totalCases = (TextView) getActivity().findViewById(R.id.totalCases);
                             String country = malaysiaData.getString("location");
-                            HomeFragment.confirmed = malaysiaData.getInt("confirmed");
-                            HomeFragment.recovered = malaysiaData.getInt("recovered");
-                            StatsFragment.confirmed = malaysiaData.getInt("confirmed");
-                            StatsFragment.recovered = malaysiaData.getInt("recovered");
+                            //HomeFragment.confirmed = malaysiaData.getInt("confirmed");
+                            //HomeFragment.recovered = malaysiaData.getInt("recovered");
+                            int confirmed = malaysiaData.getInt("confirmed");
+                            int recovered = malaysiaData.getInt("recovered");
+                            HomeFragment.confirmed = confirmed;
+                            HomeFragment.recovered = recovered;
+                            StatsFragment.confirmed = confirmed;
+                            StatsFragment.recovered = recovered;
                             StatsFragment.deaths = malaysiaData.getInt("deaths");
                             StatsFragment.active = malaysiaData.getInt("active");
+
+                            // Set Text
+                            HomeFragment.totalCases.setText(String.valueOf(confirmed));
+                            HomeFragment.totalRecoveries.setText(String.valueOf(recovered));
 
                         } catch (JSONException e) {
                             e.printStackTrace();

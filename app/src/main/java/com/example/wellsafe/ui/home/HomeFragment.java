@@ -29,8 +29,8 @@ public class HomeFragment extends Fragment {
     ArrayList<String> malaysiaList = new ArrayList<>();
     public static String inputData;
     View view;
-    TextView totalCases;
-    TextView totalRecoveries;
+    public static TextView totalCases;
+    public static TextView totalRecoveries;
     JSONObject malaysiaData;
     public static int confirmed;
     public static int recovered;

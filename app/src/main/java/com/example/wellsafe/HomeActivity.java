@@ -96,10 +96,10 @@ public class HomeActivity extends AppCompatActivity {
                             String country = malaysiaData.getString("location");
                             HomeFragment.confirmed = malaysiaData.getInt("confirmed");
                             HomeFragment.recovered = malaysiaData.getInt("recovered");
-                            StatsFragment.confirmed = malaysiaData.getInt("confirmed");
-                            StatsFragment.recovered = malaysiaData.getInt("recovered");
-                            StatsFragment.deaths = malaysiaData.getInt("deaths");
-                            StatsFragment.active = malaysiaData.getInt("active");
+                            //StatsFragment.confirmed = malaysiaData.getInt("confirmed");
+                            //StatsFragment.recovered = malaysiaData.getInt("recovered");
+                            //StatsFragment.deaths = malaysiaData.getInt("deaths");
+                            //StatsFragment.active = malaysiaData.getInt("active");
 
                         } catch (JSONException e) {
                             e.printStackTrace();

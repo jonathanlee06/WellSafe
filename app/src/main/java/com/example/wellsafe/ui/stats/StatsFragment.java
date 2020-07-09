@@ -34,10 +34,10 @@ import androidx.fragment.app.Fragment;
 public class StatsFragment extends Fragment {
 
     View view;
-    TextView totalCases;
-    TextView totalRecovered;
-    TextView totalDeaths;
-    TextView totalActive;
+    public static TextView totalCases;
+    public static TextView totalRecovered;
+    public static TextView totalDeaths;
+    public static TextView totalActive;
     LineChart lineChart;
     public static int confirmed;
     public static int recovered;
