@@ -33,6 +33,7 @@ public class CheckInFragment extends Fragment implements View.OnClickListener{
     public static TextView result;
     public static TextView identifierResult;
     Button checkIn;
+    Button viewHistory;
     View view;
     private int CAMERA_PERMISSION_CODE = 1;
 
@@ -43,7 +44,16 @@ public class CheckInFragment extends Fragment implements View.OnClickListener{
         result = (TextView) view.findViewById(R.id.result);
         identifierResult = (TextView) view.findViewById(R.id.identifierResult);
         checkIn = (Button) view.findViewById(R.id.btnScan);
+        viewHistory = (Button) view.findViewById(R.id.btnHistory);
         checkIn.setOnClickListener(this);
+        viewHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CheckInHistory.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
         return view;
     }
 
@@ -53,7 +63,7 @@ public class CheckInFragment extends Fragment implements View.OnClickListener{
         switch (v.getId()) {
             case R.id.btnScan:
                 if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(getActivity(), "Camera Permission Granted", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "Camera Permission Granted", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getActivity(), CheckInCamera.class);
                     startActivity(intent);
                 } else {
@@ -67,13 +77,13 @@ public class CheckInFragment extends Fragment implements View.OnClickListener{
             new AlertDialog.Builder(getActivity())
                             .setTitle("Camera Permission Needed")
                             .setMessage("Camera permission is needed for check-in QR code scanning")
-                            .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
                                 }
                             })
-                            .setNegativeButton("Deny", new DialogInterface.OnClickListener() {
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
@@ -89,7 +99,7 @@ public class CheckInFragment extends Fragment implements View.OnClickListener{
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == CAMERA_PERMISSION_CODE) {
             if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                //Toast.makeText(getActivity(), "Camera Permission GRANTED", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Camera Permission GRANTED", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), CheckInCamera.class);
                 startActivity(intent);
             } else {

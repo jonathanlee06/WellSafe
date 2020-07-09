@@ -100,11 +100,27 @@
         android:text="Check In"
         />
 
+    <Button
+        android:id="@+id/btnHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_below="@+id/btnScan"
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#257CE3"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:background="@drawable/button_contrast"
+        android:text="View History"
+        android:elevation="0dp"
+        />
+
     <TextView
         android:id="@+id/result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnScan"
+        android:layout_below="@+id/btnHistory"
         android:text="Result"
         android:gravity="center"
         android:textSize="22sp"

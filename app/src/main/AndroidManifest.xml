@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.wellsafe">
-
-    <uses-permission-sdk-23 android:name="android.permission.CAMERA" />
-    <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +10,8 @@
         android:roundIcon="@mipmap/wellsafe_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.checkin.CheckInCamera"></activity>
+        <activity android:name=".ui.checkin.CheckInHistory"></activity>
+        <activity android:name=".ui.checkin.CheckInCamera" />
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home" />
@@ -27,13 +26,15 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".LogInActivity"/>
-        <activity android:name=".SignUpActivity"/>
+        <activity android:name=".LogInActivity" />
+        <activity android:name=".SignUpActivity" />
     </application>
+    <meta-data
+        android:name="com.google.android.gms.vision.DEPENDENCIES"
+        android:value="barcode" />
 
-    <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES"
-        android:value="barcode"></meta-data>
+    <uses-permission-sdk-23 android:name="android.permission.CAMERA" />
 
-
+    <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
 
 </manifest>
