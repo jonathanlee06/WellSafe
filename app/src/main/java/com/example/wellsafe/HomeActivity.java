@@ -39,6 +39,7 @@ public class HomeActivity extends AppCompatActivity {
     JSONObject malaysiaData;
     BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
     ArrayList<String> deviceNearby = new ArrayList<>();
+    boolean devicePresent = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,14 +119,19 @@ public class HomeActivity extends AppCompatActivity {
             } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 //bluetooth device found
                 BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-
+                devicePresent = true;
                 deviceNearby.add(device.getName());
                 numberOfDevice = deviceNearby.size();
                 /*for(String s : deviceNearby){
                     Log.d("Device Nearby: ", s);
                 }*/
 
-                if (numberOfDevice <= 1) {
+
+
+                HomeFragment.proximityRating.setText(R.string.level4);
+                HomeFragment.proximityRating.setTextColor(Color.rgb(230,81,0));
+
+                /*if (numberOfDevice <= 1) {
                     HomeFragment.proximityRating.setText(R.string.level1);
                     HomeFragment.proximityRating.setTextColor(Color.rgb(46,125,50));
                 } else if (numberOfDevice == 2) {
@@ -137,10 +143,16 @@ public class HomeActivity extends AppCompatActivity {
                 } else {
                     HomeFragment.proximityRating.setText(R.string.level4);
                     HomeFragment.proximityRating.setTextColor(Color.RED);
-                }
+                }*/
 
 
                 //HomeFragment.text_home.setText("Found device " + device.getName());
+            }
+
+
+            else {
+                HomeFragment.proximityRating.setText(R.string.level1);
+                HomeFragment.proximityRating.setTextColor(Color.rgb(46,125,50));
             }
         }
     };

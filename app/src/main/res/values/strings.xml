@@ -46,6 +46,6 @@
     <string name="level1">Good</string>
     <string name="level2">Moderate</string>
     <string name="level3">Unhealthy</string>
-    <string name="level4">Very Unhealthy</string>
+    <string name="level4">Social Distancing Needed</string>
 
 </resources>
