@@ -18,6 +18,7 @@ import com.example.wellsafe.authentication.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.zxing.Result;
 
@@ -32,6 +33,7 @@ import java.util.Calendar;
 public class CheckInCamera extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
     ZXingScannerView ScannerView;
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,7 @@ public class CheckInCamera extends AppCompatActivity implements ZXingScannerView
         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
 
-        String id = currentDate + " " + currentTime;
+        //String id = currentDate + " " + currentTime;
 
         /* String to split. */
         String res = result.getText();
@@ -70,15 +72,13 @@ public class CheckInCamera extends AppCompatActivity implements ZXingScannerView
         onBackPressed();
 
         CheckInData checkIn = new CheckInData(location, currentDate, currentTime);
-        FirebaseDatabase.getInstance().getReference("Users")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .child("Check-In History")
-                .child(id)
-                .setValue(checkIn).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        String id = databaseReference.push().getKey();
+        databaseReference.child("Check-In History").child(id).setValue(checkIn).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         //Toast.makeText(HomeActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
-                        onBackPressed();
+                        //onBackPressed();
                     }
                 });
     }

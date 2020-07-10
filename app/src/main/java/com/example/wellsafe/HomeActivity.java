@@ -1,6 +1,13 @@
 package com.example.wellsafe;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -20,6 +27,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,6 +37,8 @@ import androidx.fragment.app.Fragment;
 public class HomeActivity extends AppCompatActivity {
 
     JSONObject malaysiaData;
+    BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+    ArrayList<String> deviceNearby = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +54,15 @@ public class HomeActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(navListener);
 
+        IntentFilter filter = new IntentFilter();
+
+        filter.addAction(BluetoothDevice.ACTION_FOUND);
+        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+        filter.addAction(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
+
+        registerReceiver(mReceiver, filter);
+        adapter.startDiscovery();
 
         //new HomeFragment();
         // Passing each menu ID as a set of Ids because each
@@ -53,6 +73,13 @@ public class HomeActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController); */
+    }
+
+    @Override
+    public void onDestroy() {
+        unregisterReceiver(mReceiver);
+
+        super.onDestroy();
     }
 
     @Override
@@ -78,6 +105,46 @@ public class HomeActivity extends AppCompatActivity {
         alert.show();
     }
 
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            int numberOfDevice = deviceNearby.size();
+
+            if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
+                //discovery starts, we can show progress dialog or perform other tasks
+            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+                //discovery finishes, dismis progress dialog
+            } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                //bluetooth device found
+                BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+
+                deviceNearby.add(device.getName());
+                numberOfDevice = deviceNearby.size();
+                /*for(String s : deviceNearby){
+                    Log.d("Device Nearby: ", s);
+                }*/
+
+                if (numberOfDevice <= 1) {
+                    HomeFragment.proximityRating.setText(R.string.level1);
+                    HomeFragment.proximityRating.setTextColor(Color.rgb(46,125,50));
+                } else if (numberOfDevice == 2) {
+                    HomeFragment.proximityRating.setText(R.string.level2);
+                    HomeFragment.proximityRating.setTextColor(Color.rgb(249,168,37));
+                } else if (numberOfDevice == 3) {
+                    HomeFragment.proximityRating.setText(R.string.level3);
+                    HomeFragment.proximityRating.setTextColor(Color.rgb(230,81,0));
+                } else {
+                    HomeFragment.proximityRating.setText(R.string.level4);
+                    HomeFragment.proximityRating.setTextColor(Color.RED);
+                }
+
+
+                //HomeFragment.text_home.setText("Found device " + device.getName());
+            }
+        }
+    };
+
     private void get_json() throws JSONException {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         String URL = "https://covid2019-api.herokuapp.com/v2/country/malaysia";
@@ -94,12 +161,18 @@ public class HomeActivity extends AppCompatActivity {
                             malaysiaData = response.getJSONObject("data");
                             //totalCases = (TextView) getActivity().findViewById(R.id.totalCases);
                             String country = malaysiaData.getString("location");
+                            int confirmed = malaysiaData.getInt("confirmed");
+                            int recovered = malaysiaData.getInt("recovered");
                             HomeFragment.confirmed = malaysiaData.getInt("confirmed");
                             HomeFragment.recovered = malaysiaData.getInt("recovered");
                             //StatsFragment.confirmed = malaysiaData.getInt("confirmed");
                             //StatsFragment.recovered = malaysiaData.getInt("recovered");
                             //StatsFragment.deaths = malaysiaData.getInt("deaths");
                             //StatsFragment.active = malaysiaData.getInt("active");
+
+                            // Set Text
+                            HomeFragment.totalCases.setText(String.valueOf(confirmed));
+                            HomeFragment.totalRecoveries.setText(String.valueOf(recovered));
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -123,9 +196,17 @@ public class HomeActivity extends AppCompatActivity {
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     Fragment selectedFragment = null;
 
+                    IntentFilter filter = new IntentFilter();
+
+                    filter.addAction(BluetoothDevice.ACTION_FOUND);
+                    filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+                    filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+
                     switch (item.getItemId()) {
                         case R.id.navigation_home:
                             selectedFragment = new HomeFragment();
+                            registerReceiver(mReceiver, filter);
+                            adapter.startDiscovery();
                             break;
                         case R.id.navigation_stats:
                             selectedFragment = new StatsFragment();

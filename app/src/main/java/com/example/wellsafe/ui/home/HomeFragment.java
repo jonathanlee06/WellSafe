@@ -18,11 +18,15 @@ import com.example.wellsafe.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 public class HomeFragment extends Fragment {
 
@@ -31,6 +35,8 @@ public class HomeFragment extends Fragment {
     View view;
     public static TextView totalCases;
     public static TextView totalRecoveries;
+    public static TextView text_home;
+    public static TextView proximityRating;
     JSONObject malaysiaData;
     public static int confirmed;
     public static int recovered;
@@ -45,11 +51,15 @@ public class HomeFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }*/
+
         view = inflater.inflate(R.layout.fragment_home, container, false);
         totalCases = (TextView) view.findViewById(R.id.totalCases);
         totalRecoveries = (TextView) view.findViewById(R.id.totalRecoveries);
+        text_home = (TextView) view.findViewById(R.id.text_home);
+        proximityRating = (TextView) view.findViewById(R.id.proximityRating);
         totalCases.setText(String.valueOf(confirmed));
         totalRecoveries.setText(String.valueOf(recovered));
+
         return view;
     }
 
@@ -99,17 +109,32 @@ public class HomeFragment extends Fragment {
         );
 
         requestQueue.add(objectRequest);
+    }
 
-        /*    JSONObject jsonObject = new JSONObject(inputData);
-            JSONObject malaysiaData = jsonObject.getJSONObject("data");
+    private static class Level {
+        String text;
+        int textColor;
+        int image;
+    }
 
-            //totalCases.setText(malaysiaData.getString("confirmed"));
-        String confirmed = malaysiaData.getString("confirmed");
-        Log.d("API test", confirmed + " or not");
+    private Level getLevel(int userCount) {
+        Level level = new Level();
+        level.text = "-";
 
-            //malaysiaList.add(jsonObject.getString("data"));
-            /* malaysiaList.add(jsonObject.getString("deaths"));
-            malaysiaList.add(jsonObject.getString("recovered"));
-            malaysiaList.add(jsonObject.getString("active")); */
+        if (userCount <= 200) {
+            level.text = getString(R.string.level1);
+            level.textColor = R.color.colorLevel1;
+        } else if (userCount <= 400) {
+            level.text = getString(R.string.level2);
+            level.textColor = R.color.colorLevel2;
+        } else if (userCount <= 800) {
+            level.text = getString(R.string.level3);
+            level.textColor = R.color.colorLevel3;
+        } else {
+            level.text = getString(R.string.level4);
+            level.textColor = R.color.colorLevel4;
+        }
+
+        return level;
     }
 }

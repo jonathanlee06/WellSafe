@@ -132,9 +132,7 @@ public class SplashActivity extends AppCompatActivity {
                             StatsFragment.deaths = malaysiaData.getInt("deaths");
                             StatsFragment.active = malaysiaData.getInt("active");
 
-                            // Set Text
-                            HomeFragment.totalCases.setText(String.valueOf(confirmed));
-                            HomeFragment.totalRecoveries.setText(String.valueOf(recovered));
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();

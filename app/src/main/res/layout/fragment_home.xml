@@ -25,9 +25,10 @@
 
     
     <GridLayout
+        android:id="@+id/homeGrid"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginTop="120dp"
+        android:layout_height="170dp"
+        android:layout_marginTop="100dp"
         android:padding="10dp"
         android:rowCount="1"
         android:columnCount="2"
@@ -42,7 +43,7 @@
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_margin="10dp"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="15dp"
             app:cardElevation="5dp"
             app:cardBackgroundColor="#fff"
             >
@@ -88,7 +89,7 @@
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_margin="10dp"
-            app:cardCornerRadius="20dp"
+            app:cardCornerRadius="15dp"
             app:cardElevation="5dp"
             app:cardBackgroundColor="#fff"
             >
@@ -129,6 +130,66 @@
 
     </GridLayout>
 
+    <GridLayout
+        android:id="@+id/homeGrid2"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:padding="10dp"
+        android:layout_below="@+id/homeGrid">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/proximityTracing"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:layout_gravity="fill"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="5dp"
+            app:cardBackgroundColor="#fff"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/distancingTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:fontFamily="@font/product_sans_regular"
+
+                    android:textAlignment="center"
+                    android:text="Social Distancing Status"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/proximityRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:fontFamily="@font/product_sans_bold"
+                    android:textAlignment="center"
+                    android:textColor="#2E7D32"
+                    android:text="Good"
+                    android:textSize="30dp" />
+
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+    </GridLayout>
+
+
     <TextView
         android:id="@+id/text_home"
         android:layout_width="match_parent"
@@ -136,6 +197,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_below="@+id/homeGrid2"
         android:layout_centerVertical="true"
         android:text="This is home"
         android:textAlignment="center"
