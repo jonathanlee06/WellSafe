@@ -128,10 +128,10 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-                HomeFragment.proximityRating.setText(R.string.level4);
-                HomeFragment.proximityRating.setTextColor(Color.rgb(230,81,0));
+                //HomeFragment.proximityRating.setText(R.string.level4);
+                //HomeFragment.proximityRating.setTextColor(Color.rgb(230,81,0));
 
-                /*if (numberOfDevice <= 1) {
+                if (numberOfDevice <= 1) {
                     HomeFragment.proximityRating.setText(R.string.level1);
                     HomeFragment.proximityRating.setTextColor(Color.rgb(46,125,50));
                 } else if (numberOfDevice == 2) {
@@ -143,7 +143,7 @@ public class HomeActivity extends AppCompatActivity {
                 } else {
                     HomeFragment.proximityRating.setText(R.string.level4);
                     HomeFragment.proximityRating.setTextColor(Color.RED);
-                }*/
+                }
 
 
                 //HomeFragment.text_home.setText("Found device " + device.getName());
