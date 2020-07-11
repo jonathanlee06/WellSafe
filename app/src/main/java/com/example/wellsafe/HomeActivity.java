@@ -76,6 +76,7 @@ public class HomeActivity extends AppCompatActivity {
         filter.addAction(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
 
         registerReceiver(mReceiver, filter);
+        deviceNearby.clear();
         adapter.startDiscovery();
 
         //new HomeFragment();
@@ -143,25 +144,47 @@ public class HomeActivity extends AppCompatActivity {
             } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 //bluetooth device found
                 BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                devicePresent = true;
+
                 int deviceType = device.getType();
 
 
                 if(deviceType == BluetoothDevice.DEVICE_TYPE_CLASSIC)
                 {
+                    devicePresent = true;
                     deviceNearby.add(device.getName());
+                    /*if (numberOfDevice == 0) {
+                        HomeFragment.proximityRating.setText(R.string.level1);
+                        HomeFragment.proximityRating.setTextColor(Color.rgb(46,125,50));
+                        deviceNearby.clear();
+                        adapter.startDiscovery();
+                    } else if (numberOfDevice == 2) {
+                        HomeFragment.proximityRating.setText(R.string.level2);
+                        HomeFragment.proximityRating.setTextColor(Color.rgb(249,168,37));
+                        deviceNearby.clear();
+                        adapter.startDiscovery();
+                    } else if (numberOfDevice == 3) {
+                        HomeFragment.proximityRating.setText(R.string.level3);
+                        HomeFragment.proximityRating.setTextColor(Color.rgb(230,81,0));
+                        deviceNearby.clear();
+                        adapter.startDiscovery();
+                    } else if (numberOfDevice == 1) {
+                        HomeFragment.proximityRating.setText(R.string.level4);
+                        HomeFragment.proximityRating.setTextColor(Color.RED);
+                        deviceNearby.clear();
+                        adapter.startDiscovery();
+                    }*/
                 }
                 else if(deviceType == BluetoothDevice.DEVICE_TYPE_LE)
                 {
-
+                    devicePresent = false;
                 }
                 else if(deviceType == BluetoothDevice.DEVICE_TYPE_DUAL)
                 {
-
+                    devicePresent = false;
                 }
                 else if(deviceType == BluetoothDevice.DEVICE_TYPE_UNKNOWN)
                 {
-
+                    devicePresent = false;
                 }
 
 
@@ -169,24 +192,20 @@ public class HomeActivity extends AppCompatActivity {
                 /*for(String s : deviceNearby){
                     Log.d("Device Nearby: ", s);
                 }*/
-
+                if(devicePresent){
+                    HomeFragment.proximityRating.setText(R.string.level4);
+                    HomeFragment.proximityRating.setTextColor(Color.RED);
+                    adapter.startDiscovery();
+                } else {
+                    HomeFragment.proximityRating.setText(R.string.level1);
+                    HomeFragment.proximityRating.setTextColor(Color.rgb(46,125,50));
+                    adapter.startDiscovery();
+                }
 
                 //HomeFragment.proximityRating.setText(R.string.level4);
                 //HomeFragment.proximityRating.setTextColor(Color.rgb(230,81,0));
 
-                if (numberOfDevice <= 1) {
-                    HomeFragment.proximityRating.setText(R.string.level1);
-                    HomeFragment.proximityRating.setTextColor(Color.rgb(46,125,50));
-                } else if (numberOfDevice == 2) {
-                    HomeFragment.proximityRating.setText(R.string.level2);
-                    HomeFragment.proximityRating.setTextColor(Color.rgb(249,168,37));
-                } else if (numberOfDevice == 3) {
-                    HomeFragment.proximityRating.setText(R.string.level3);
-                    HomeFragment.proximityRating.setTextColor(Color.rgb(230,81,0));
-                } else {
-                    HomeFragment.proximityRating.setText(R.string.level4);
-                    HomeFragment.proximityRating.setTextColor(Color.RED);
-                }
+
 
 
                 //HomeFragment.text_home.setText("Found device " + device.getName());
