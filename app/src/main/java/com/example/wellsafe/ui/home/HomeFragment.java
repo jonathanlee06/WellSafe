@@ -1,10 +1,22 @@
 package com.example.wellsafe.ui.home;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -14,6 +26,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wellsafe.R;
+import com.example.wellsafe.ui.checkin.CheckInCamera;
+import com.kyleduo.switchbutton.SwitchButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,6 +38,8 @@ import java.util.logging.Level;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -40,6 +56,17 @@ public class HomeFragment extends Fragment {
     JSONObject malaysiaData;
     public static int confirmed;
     public static int recovered;
+    
+    //Tracing
+    BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+    ArrayList<String> deviceNearby = new ArrayList<>();
+    boolean devicePresent = false;
+    public static SwitchButton distancingSwitch;
+
+    private int LOCATION_PERMISSION_CODE = 1;
+    String[] PERMISSIONS = {
+
+    };
 
 
     @Nullable
@@ -60,6 +87,67 @@ public class HomeFragment extends Fragment {
         totalCases.setText(String.valueOf(confirmed));
         totalRecoveries.setText(String.valueOf(recovered));
 
+        distancingSwitch = (SwitchButton) view.findViewById(R.id.distancingStatusSwitch);
+        distancingSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    if(isChecked){
+                        proximityRating.setText(R.string.level0);
+
+                        // Tracing
+                        final IntentFilter filter = new IntentFilter();
+                        filter.addAction(BluetoothDevice.ACTION_FOUND);
+                        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+                        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+                        filter.addAction(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
+                        requireActivity().registerReceiver(mReceiver, filter);
+                        deviceNearby.clear();
+                        adapter.startDiscovery();
+
+                    } else{
+                        proximityRating.setText("Off");
+                        deviceNearby.clear();
+                        if (adapter != null) {
+                            adapter.cancelDiscovery();
+                        }
+                        // Unregister broadcast listeners
+                        requireActivity().unregisterReceiver(mReceiver);
+                    }
+
+                } else {
+                    requestLocationPermission();
+                    if(isChecked){
+                        proximityRating.setText(R.string.level0);
+
+                        // Tracing
+                        final IntentFilter filter = new IntentFilter();
+                        filter.addAction(BluetoothDevice.ACTION_FOUND);
+                        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+                        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+                        filter.addAction(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
+                        requireActivity().registerReceiver(mReceiver, filter);
+                        deviceNearby.clear();
+                        adapter.startDiscovery();
+
+                    } else{
+                        proximityRating.setText("Off");
+                        deviceNearby.clear();
+                        if (adapter != null) {
+                            adapter.cancelDiscovery();
+                        }
+                        // Unregister broadcast listeners
+                        requireActivity().unregisterReceiver(mReceiver);
+                    }
+                }
+
+
+            }
+
+        });
+        
+        
         return view;
     }
 
@@ -73,6 +161,127 @@ public class HomeFragment extends Fragment {
             e.printStackTrace();
         } */
     }
+
+    @Override
+    public void onDestroy() {
+        /*unregisterReceiver(mReceiver);
+        adapter.cancelDiscovery();*/
+        super.onDestroy();
+
+        // Make sure we're not doing discovery anymore
+        if (adapter != null) {
+            adapter.cancelDiscovery();
+        }
+        // Unregister broadcast listeners
+        requireActivity().unregisterReceiver(mReceiver);
+    }
+
+    private void requestLocationPermission(){
+        if(ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) || ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
+            new AlertDialog.Builder(getActivity())
+                    .setTitle("GPS Location Permission Needed")
+                    .setMessage("GPS Location permission is needed for social distancing status check")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION}, LOCATION_PERMISSION_CODE);
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .create().show();
+        } else {
+            ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION}, LOCATION_PERMISSION_CODE);
+        }
+    }
+
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            int numberOfDevice = deviceNearby.size();
+
+
+            if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
+                //discovery starts, we can show progress dialog or perform other tasks
+            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+                //discovery finishes, dismiss progress dialog
+                adapter.startDiscovery();
+            } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                //bluetooth device found
+                BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+
+                int deviceType = device.getType();
+
+
+                if(deviceType == BluetoothDevice.DEVICE_TYPE_CLASSIC)
+                {
+                    devicePresent = true;
+                    deviceNearby.add(device.getName());
+                    /*if (numberOfDevice == 0) {
+                        HomeFragment.proximityRating.setText(R.string.level1);
+                        HomeFragment.proximityRating.setTextColor(Color.rgb(46,125,50));
+                        deviceNearby.clear();
+                        adapter.startDiscovery();
+                    } else if (numberOfDevice == 2) {
+                        HomeFragment.proximityRating.setText(R.string.level2);
+                        HomeFragment.proximityRating.setTextColor(Color.rgb(249,168,37));
+                        deviceNearby.clear();
+                        adapter.startDiscovery();
+                    } else if (numberOfDevice == 3) {
+                        HomeFragment.proximityRating.setText(R.string.level3);
+                        HomeFragment.proximityRating.setTextColor(Color.rgb(230,81,0));
+                        deviceNearby.clear();
+                        adapter.startDiscovery();
+                    } else if (numberOfDevice == 1) {
+                        HomeFragment.proximityRating.setText(R.string.level4);
+                        HomeFragment.proximityRating.setTextColor(Color.RED);
+                        deviceNearby.clear();
+                        adapter.startDiscovery();
+                    }*/
+                }
+                else if(deviceType == BluetoothDevice.DEVICE_TYPE_LE)
+                {
+                    devicePresent = false;
+                }
+                else if(deviceType == BluetoothDevice.DEVICE_TYPE_DUAL)
+                {
+                    devicePresent = false;
+                }
+                else if(deviceType == BluetoothDevice.DEVICE_TYPE_UNKNOWN)
+                {
+                    devicePresent = false;
+                }
+
+
+
+                /*for(String s : deviceNearby){
+                    Log.d("Device Nearby: ", s);
+                }*/
+                if(devicePresent){
+                    HomeFragment.proximityRating.setText(R.string.level4);
+                    HomeFragment.proximityRating.setTextColor(Color.RED);
+                    adapter.startDiscovery();
+                } else {
+                    HomeFragment.proximityRating.setText(R.string.level1);
+                    HomeFragment.proximityRating.setTextColor(Color.rgb(46,125,50));
+                    adapter.startDiscovery();
+                }
+
+                //HomeFragment.proximityRating.setText(R.string.level4);
+                //HomeFragment.proximityRating.setTextColor(Color.rgb(230,81,0));
+
+
+
+
+                //HomeFragment.text_home.setText("Found device " + device.getName());
+            }
+        }
+    };
 
     private void get_json() throws JSONException {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
@@ -109,32 +318,5 @@ public class HomeFragment extends Fragment {
         );
 
         requestQueue.add(objectRequest);
-    }
-
-    private static class Level {
-        String text;
-        int textColor;
-        int image;
-    }
-
-    private Level getLevel(int userCount) {
-        Level level = new Level();
-        level.text = "-";
-
-        if (userCount <= 200) {
-            level.text = getString(R.string.level1);
-            level.textColor = R.color.colorLevel1;
-        } else if (userCount <= 400) {
-            level.text = getString(R.string.level2);
-            level.textColor = R.color.colorLevel2;
-        } else if (userCount <= 800) {
-            level.text = getString(R.string.level3);
-            level.textColor = R.color.colorLevel3;
-        } else {
-            level.text = getString(R.string.level4);
-            level.textColor = R.color.colorLevel4;
-        }
-
-        return level;
     }
 }

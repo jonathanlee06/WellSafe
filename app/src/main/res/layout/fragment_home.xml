@@ -162,12 +162,26 @@
                 <TextView
                     android:id="@+id/distancingTitle"
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
+                    android:layout_height="wrap_content"
                     android:fontFamily="@font/product_sans_regular"
 
-                    android:textAlignment="center"
+                    android:textAlignment="gravity"
                     android:text="Social Distancing Status"
                     android:textSize="20dp" />
+
+                <com.kyleduo.switchbutton.SwitchButton
+                    android:id="@+id/distancingStatusSwitch"
+                    style="@style/SwitchButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/custom_text_state_color"
+                    android:textSize="16dp"
+                    app:kswTextAdjust="-2dp"
+                    app:kswTextExtra="8dp"
+                    app:kswTextOff="Off"
+                    app:kswTextOn="On"
+                    />
 
                 <TextView
                     android:id="@+id/proximityRating"
@@ -175,11 +189,12 @@
                     android:layout_height="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_margin="20dp"
+                    android:layout_below="@id/distancingTitle"
                     android:gravity="center"
                     android:fontFamily="@font/product_sans_bold"
                     android:textAlignment="center"
 
-                    android:text="Checking..."
+                    android:text="Off"
                     android:textSize="35dp" />
 
 

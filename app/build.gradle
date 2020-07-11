@@ -74,4 +74,7 @@ dependencies {
     // Tracing
     implementation 'org.altbeacon:android-beacon-library:2+'
 
+    // UI
+    implementation 'com.kyleduo.switchbutton:library:2.0.0'
+
 }

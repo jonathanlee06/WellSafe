@@ -2,16 +2,12 @@ package com.example.wellsafe;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
+
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,10 +20,8 @@ import com.example.wellsafe.ui.home.HomeFragment;
 import com.example.wellsafe.ui.profile.ProfileFragment;
 import com.example.wellsafe.ui.stats.StatsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.kyleduo.switchbutton.SwitchButton;
 
-import org.altbeacon.beacon.BeaconConsumer;
-import org.altbeacon.beacon.BeaconManager;
-import org.altbeacon.beacon.BeaconParser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,12 +35,7 @@ import androidx.fragment.app.Fragment;
 public class HomeActivity extends AppCompatActivity {
 
     JSONObject malaysiaData;
-    BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-    ArrayList<String> deviceNearby = new ArrayList<>();
-    boolean devicePresent = false;
 
-    // Tracing
-    private BeaconManager beaconManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,22 +51,9 @@ public class HomeActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(navListener);
 
-        // Tracing
 
-        beaconManager = BeaconManager.getInstanceForApplication(this);
-        beaconManager.getBeaconParsers().add(new BeaconParser().
-                setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
 
-        IntentFilter filter = new IntentFilter();
 
-        filter.addAction(BluetoothDevice.ACTION_FOUND);
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-        filter.addAction(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
-
-        registerReceiver(mReceiver, filter);
-        deviceNearby.clear();
-        adapter.startDiscovery();
 
         //new HomeFragment();
         // Passing each menu ID as a set of Ids because each
@@ -92,19 +68,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-    @Override
-    public void onDestroy() {
-        /*unregisterReceiver(mReceiver);
-        adapter.cancelDiscovery();*/
-        super.onDestroy();
 
-        // Make sure we're not doing discovery anymore
-        if (adapter != null) {
-            adapter.cancelDiscovery();
-        }
-        // Unregister broadcast listeners
-        this.unregisterReceiver(mReceiver);
-    }
 
     @Override
     public void onBackPressed() {
@@ -128,90 +92,6 @@ public class HomeActivity extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }
-
-    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
-
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            int numberOfDevice = deviceNearby.size();
-
-
-            if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
-                //discovery starts, we can show progress dialog or perform other tasks
-            } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-                //discovery finishes, dismiss progress dialog
-                adapter.startDiscovery();
-            } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                //bluetooth device found
-                BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-
-                int deviceType = device.getType();
-
-
-                if(deviceType == BluetoothDevice.DEVICE_TYPE_CLASSIC)
-                {
-                    devicePresent = true;
-                    deviceNearby.add(device.getName());
-                    /*if (numberOfDevice == 0) {
-                        HomeFragment.proximityRating.setText(R.string.level1);
-                        HomeFragment.proximityRating.setTextColor(Color.rgb(46,125,50));
-                        deviceNearby.clear();
-                        adapter.startDiscovery();
-                    } else if (numberOfDevice == 2) {
-                        HomeFragment.proximityRating.setText(R.string.level2);
-                        HomeFragment.proximityRating.setTextColor(Color.rgb(249,168,37));
-                        deviceNearby.clear();
-                        adapter.startDiscovery();
-                    } else if (numberOfDevice == 3) {
-                        HomeFragment.proximityRating.setText(R.string.level3);
-                        HomeFragment.proximityRating.setTextColor(Color.rgb(230,81,0));
-                        deviceNearby.clear();
-                        adapter.startDiscovery();
-                    } else if (numberOfDevice == 1) {
-                        HomeFragment.proximityRating.setText(R.string.level4);
-                        HomeFragment.proximityRating.setTextColor(Color.RED);
-                        deviceNearby.clear();
-                        adapter.startDiscovery();
-                    }*/
-                }
-                else if(deviceType == BluetoothDevice.DEVICE_TYPE_LE)
-                {
-                    devicePresent = false;
-                }
-                else if(deviceType == BluetoothDevice.DEVICE_TYPE_DUAL)
-                {
-                    devicePresent = false;
-                }
-                else if(deviceType == BluetoothDevice.DEVICE_TYPE_UNKNOWN)
-                {
-                    devicePresent = false;
-                }
-
-
-
-                /*for(String s : deviceNearby){
-                    Log.d("Device Nearby: ", s);
-                }*/
-                if(devicePresent){
-                    HomeFragment.proximityRating.setText(R.string.level4);
-                    HomeFragment.proximityRating.setTextColor(Color.RED);
-                    adapter.startDiscovery();
-                } else {
-                    HomeFragment.proximityRating.setText(R.string.level1);
-                    HomeFragment.proximityRating.setTextColor(Color.rgb(46,125,50));
-                    adapter.startDiscovery();
-                }
-
-                //HomeFragment.proximityRating.setText(R.string.level4);
-                //HomeFragment.proximityRating.setTextColor(Color.rgb(230,81,0));
-
-
-
-
-                //HomeFragment.text_home.setText("Found device " + device.getName());
-            }
-        }
-    };
 
     private void get_json() throws JSONException {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -273,8 +153,6 @@ public class HomeActivity extends AppCompatActivity {
                     switch (item.getItemId()) {
                         case R.id.navigation_home:
                             selectedFragment = new HomeFragment();
-                            registerReceiver(mReceiver, filter);
-                            adapter.startDiscovery();
                             break;
                         case R.id.navigation_stats:
                             selectedFragment = new StatsFragment();

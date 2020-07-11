@@ -43,6 +43,7 @@
     <string name="product_sans_bold_italic">font/product_sans_bold_italic.ttf</string>
 
     <!--Proximity Alert-->
+    <string name="level0">Checking...</string>
     <string name="level1">Good</string>
     <string name="level2">Moderate</string>
     <string name="level3">Unhealthy</string>
