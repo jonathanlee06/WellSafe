@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,6 +25,9 @@ import com.example.wellsafe.ui.profile.ProfileFragment;
 import com.example.wellsafe.ui.stats.StatsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.altbeacon.beacon.BeaconConsumer;
+import org.altbeacon.beacon.BeaconManager;
+import org.altbeacon.beacon.BeaconParser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,6 +45,9 @@ public class HomeActivity extends AppCompatActivity {
     ArrayList<String> deviceNearby = new ArrayList<>();
     boolean devicePresent = false;
 
+    // Tracing
+    private BeaconManager beaconManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try
@@ -54,6 +61,12 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(navListener);
+
+        // Tracing
+
+        beaconManager = BeaconManager.getInstanceForApplication(this);
+        beaconManager.getBeaconParsers().add(new BeaconParser().
+                setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
 
         IntentFilter filter = new IntentFilter();
 
@@ -76,11 +89,20 @@ public class HomeActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController); */
     }
 
+
+
     @Override
     public void onDestroy() {
-        unregisterReceiver(mReceiver);
-
+        /*unregisterReceiver(mReceiver);
+        adapter.cancelDiscovery();*/
         super.onDestroy();
+
+        // Make sure we're not doing discovery anymore
+        if (adapter != null) {
+            adapter.cancelDiscovery();
+        }
+        // Unregister broadcast listeners
+        this.unregisterReceiver(mReceiver);
     }
 
     @Override
@@ -112,20 +134,41 @@ public class HomeActivity extends AppCompatActivity {
             String action = intent.getAction();
             int numberOfDevice = deviceNearby.size();
 
+
             if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
                 //discovery starts, we can show progress dialog or perform other tasks
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-                //discovery finishes, dismis progress dialog
+                //discovery finishes, dismiss progress dialog
+                adapter.startDiscovery();
             } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 //bluetooth device found
                 BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 devicePresent = true;
-                deviceNearby.add(device.getName());
-                numberOfDevice = deviceNearby.size();
+                int deviceType = device.getType();
+
+
+                if(deviceType == BluetoothDevice.DEVICE_TYPE_CLASSIC)
+                {
+                    deviceNearby.add(device.getName());
+                }
+                else if(deviceType == BluetoothDevice.DEVICE_TYPE_LE)
+                {
+
+                }
+                else if(deviceType == BluetoothDevice.DEVICE_TYPE_DUAL)
+                {
+
+                }
+                else if(deviceType == BluetoothDevice.DEVICE_TYPE_UNKNOWN)
+                {
+
+                }
+
+
+
                 /*for(String s : deviceNearby){
                     Log.d("Device Nearby: ", s);
                 }*/
-
 
 
                 //HomeFragment.proximityRating.setText(R.string.level4);
@@ -147,12 +190,6 @@ public class HomeActivity extends AppCompatActivity {
 
 
                 //HomeFragment.text_home.setText("Found device " + device.getName());
-            }
-
-
-            else {
-                HomeFragment.proximityRating.setText(R.string.level1);
-                HomeFragment.proximityRating.setTextColor(Color.rgb(46,125,50));
             }
         }
     };
