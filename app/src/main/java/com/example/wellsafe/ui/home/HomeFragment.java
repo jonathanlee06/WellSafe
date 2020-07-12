@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -61,6 +62,7 @@ public class HomeFragment extends Fragment {
     BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
     ArrayList<String> deviceNearby = new ArrayList<>();
     boolean devicePresent = false;
+    boolean checked = false;
     public static SwitchButton distancingSwitch;
 
     private int LOCATION_PERMISSION_CODE = 1;
@@ -88,12 +90,20 @@ public class HomeFragment extends Fragment {
         totalRecoveries.setText(String.valueOf(recovered));
 
         distancingSwitch = (SwitchButton) view.findViewById(R.id.distancingStatusSwitch);
+        if(checked){
+            distancingSwitch.setChecked(true);
+        } else{
+            distancingSwitch.setChecked(false);
+        }
         distancingSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     if(isChecked){
+                        checked = true;
+                        enableBT(view);
+                        statusCheck();
                         proximityRating.setText(R.string.level0);
 
                         // Tracing
@@ -107,6 +117,7 @@ public class HomeFragment extends Fragment {
                         adapter.startDiscovery();
 
                     } else{
+                        checked = false;
                         proximityRating.setText("Off");
                         deviceNearby.clear();
                         if (adapter != null) {
@@ -119,6 +130,7 @@ public class HomeFragment extends Fragment {
                 } else {
                     requestLocationPermission();
                     if(isChecked){
+                        checked = true;
                         proximityRating.setText(R.string.level0);
 
                         // Tracing
@@ -132,6 +144,7 @@ public class HomeFragment extends Fragment {
                         adapter.startDiscovery();
 
                     } else{
+                        checked = false;
                         proximityRating.setText("Off");
                         deviceNearby.clear();
                         if (adapter != null) {
@@ -174,6 +187,44 @@ public class HomeFragment extends Fragment {
         }
         // Unregister broadcast listeners
         requireActivity().unregisterReceiver(mReceiver);
+    }
+
+    public void enableBT(View view){
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (!mBluetoothAdapter.isEnabled()){
+            Intent intentBtEnabled = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            // The REQUEST_ENABLE_BT constant passed to startActivityForResult() is a locally defined integer (which must be greater than 0), that the system passes back to you in your onActivityResult()
+            // implementation as the requestCode parameter.
+            int REQUEST_ENABLE_BT = 1;
+            startActivityForResult(intentBtEnabled, REQUEST_ENABLE_BT);
+        }
+    }
+
+    public void statusCheck() {
+        final LocationManager manager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            buildAlertMessageNoGps();
+
+        }
+    }
+
+    private void buildAlertMessageNoGps() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("Your GPS seems to be disabled, do you want to enable it?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void requestLocationPermission(){
