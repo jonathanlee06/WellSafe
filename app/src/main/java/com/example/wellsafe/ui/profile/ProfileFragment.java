@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.wellsafe.LogInActivity;
 import com.example.wellsafe.R;
+import com.example.wellsafe.api.FirebaseUtils;
 import com.example.wellsafe.authentication.Users;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +27,9 @@ public class ProfileFragment extends Fragment {
 
     View view;
     DatabaseReference reference;
+    public static String fullNameData;
+    public static String emailData;
+    public static String phoneNumberData;
     private TextView fullName;
     private TextView email;
     private TextView phoneNumber;
@@ -33,12 +37,18 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        FirebaseUtils fb = new FirebaseUtils();
+        fb.getProfileData();
+
         view = inflater.inflate(R.layout.fragment_profile, container, false);
         Button logout = (Button) view.findViewById(R.id.logoutButton);
         Button editProfile = (Button) view.findViewById(R.id.editProfileButton);
         fullName = (TextView) view.findViewById((R.id.fullName));
         email = (TextView) view.findViewById((R.id.email));
         phoneNumber = (TextView) view.findViewById((R.id.phoneNumber));
+        fullName.setText(fullNameData);
+        email.setText(emailData);
+        phoneNumber.setText(phoneNumberData);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,24 +61,6 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), EditProfile.class);
                 startActivity(intent);
-            }
-        });
-
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("User Information");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    Users userInfo = snapshot.getValue(Users.class);
-                    fullName.setText(userInfo.fullName);
-                    email.setText(userInfo.email);
-                    phoneNumber.setText(userInfo.phone);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
 

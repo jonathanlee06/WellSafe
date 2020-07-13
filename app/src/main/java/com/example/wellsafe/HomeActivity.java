@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.wellsafe.api.FirebaseUtils;
 import com.example.wellsafe.ui.checkin.CheckInFragment;
 import com.example.wellsafe.ui.home.HomeFragment;
 import com.example.wellsafe.ui.profile.ProfileFragment;
@@ -51,7 +52,8 @@ public class HomeActivity extends AppCompatActivity {
         }
         catch (NullPointerException | JSONException e){}
         super.onCreate(savedInstanceState);
-
+        FirebaseUtils fb = new FirebaseUtils();
+        fb.getProfileData();
         setContentView(R.layout.activity_home);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         BottomNavigationView navView = findViewById(R.id.nav_view);
