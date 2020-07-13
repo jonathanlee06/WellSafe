@@ -8,11 +8,14 @@ public class CheckInData {
 
     }
 
-
     public CheckInData(String location, String date, String time){
         this.location = location;
         this.date = date;
         this.time = time;
+    }
+
+    public String getCheckinID() {
+        return checkinID;
     }
 
     public String getLocation() {

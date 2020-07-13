@@ -3,6 +3,7 @@ package com.example.wellsafe.ui.checkin;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,40 +44,30 @@ public class CheckInHistory extends AppCompatActivity {
         catch (NullPointerException e){}
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkin_history);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerviewHistory);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new HistoryAdapter(CheckInHistory.this, historyList);
-        recyclerView.setAdapter(adapter);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerviewHistory);;
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, 0));
 
-        reference = FirebaseDatabase.getInstance().getReference().child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Check-In History");
-        reference.addChildEventListener(new ChildEventListener() {
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Check-In History");
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Iterable<DataSnapshot> historyChildren = snapshot.getChildren();
-                for(DataSnapshot dataSnapshot: historyChildren){
-                    CheckInData h = dataSnapshot.getValue(CheckInData.class);
-                    Log.e("History: ", h.location + " " + h.date);
-                    historyList.add(h);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    Iterable<DataSnapshot> historyChildren = snapshot.getChildren();
+                    for(DataSnapshot dataSnapshot: historyChildren){
+                        Log.e("Key Value: ", dataSnapshot.getKey());
+                        CheckInData h = dataSnapshot.getValue(CheckInData.class);
+
+                        historyList.add(h);
+                        Log.e("History: ", h.location);
+                    }
+                    adapter = new HistoryAdapter(CheckInHistory.this, historyList);
+                    recyclerView.setAdapter(adapter);
                 }
-            }
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Iterable<DataSnapshot> historyChildren = snapshot.getChildren();
-                for(DataSnapshot dataSnapshot: historyChildren){
-                    CheckInData h = dataSnapshot.getValue(CheckInData.class);
-                    Log.e("History: ", h.location + " " + h.date);
-                    historyList.add(h);
-                }
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
             }
 
@@ -85,23 +76,6 @@ public class CheckInHistory extends AppCompatActivity {
 
             }
         });
-        /*reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Iterable<DataSnapshot> historyChildren = snapshot.getChildren();
-                for(DataSnapshot dataSnapshot: historyChildren){
-                    CheckInData h = dataSnapshot.getValue(CheckInData.class);
-                    Log.e("History: ", h.location + " " + h.date);
-                    historyList.add(h);
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
 
     }
 }

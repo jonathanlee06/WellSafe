@@ -71,6 +71,7 @@ public class CheckInCamera extends AppCompatActivity implements ZXingScannerView
         CheckInFragment.identifierResult.setText(currentTime);
         onBackPressed();
 
+        //CheckInData checkIn = new CheckInData(location, currentDate, currentTime);
         CheckInData checkIn = new CheckInData(location, currentDate, currentTime);
         databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         String id = databaseReference.push().getKey();

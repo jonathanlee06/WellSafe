@@ -64,6 +64,7 @@ public class HomeFragment extends Fragment {
     boolean devicePresent = false;
     public static boolean checked = false;
     public static SwitchButton distancingSwitch;
+    private boolean isRegistered;
 
     private int LOCATION_PERMISSION_CODE = 1;
     String[] PERMISSIONS = {
@@ -95,7 +96,7 @@ public class HomeFragment extends Fragment {
             startTracing();
         } else{
             distancingSwitch.setChecked(false);
-            //stopTracing();
+            stopTracing();
         }
         distancingSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -105,7 +106,6 @@ public class HomeFragment extends Fragment {
                     if(isChecked){
                         checked = true;
                         startTracing();
-
                     } else{
                         checked = false;
                         stopTracing();
@@ -144,8 +144,19 @@ public class HomeFragment extends Fragment {
         filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         filter.addAction(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
         requireActivity().registerReceiver(mReceiver, filter);
+        isRegistered = true;
         deviceNearby.clear();
         adapter.startDiscovery();
+
+        if(devicePresent){
+            HomeFragment.proximityRating.setText(R.string.level4);
+            HomeFragment.proximityRating.setTextColor(Color.RED);
+            adapter.startDiscovery();
+        } else {
+            HomeFragment.proximityRating.setText(R.string.level1);
+            HomeFragment.proximityRating.setTextColor(Color.rgb(46,125,50));
+            adapter.startDiscovery();
+        }
     }
 
     public void stopTracing() {
@@ -155,8 +166,13 @@ public class HomeFragment extends Fragment {
         if (adapter != null) {
             adapter.cancelDiscovery();
         }
-        // Unregister broadcast listeners
-        requireActivity().unregisterReceiver(mReceiver);
+
+        if(isRegistered){
+            // Unregister broadcast listeners
+            requireActivity().unregisterReceiver(mReceiver);
+            isRegistered = false;
+        }
+
     }
 
     @Override
@@ -180,8 +196,12 @@ public class HomeFragment extends Fragment {
         if (adapter != null) {
             adapter.cancelDiscovery();
         }
-        // Unregister broadcast listeners
-        requireActivity().unregisterReceiver(mReceiver);
+
+        if(isRegistered){
+            // Unregister broadcast listeners
+            requireActivity().unregisterReceiver(mReceiver);
+            isRegistered = false;
+        }
     }
 
     public void enableBT(View view){
@@ -309,15 +329,7 @@ public class HomeFragment extends Fragment {
                 /*for(String s : deviceNearby){
                     Log.d("Device Nearby: ", s);
                 }*/
-                if(devicePresent){
-                    HomeFragment.proximityRating.setText(R.string.level4);
-                    HomeFragment.proximityRating.setTextColor(Color.RED);
-                    adapter.startDiscovery();
-                } else {
-                    HomeFragment.proximityRating.setText(R.string.level1);
-                    HomeFragment.proximityRating.setTextColor(Color.rgb(46,125,50));
-                    adapter.startDiscovery();
-                }
+
 
                 //HomeFragment.proximityRating.setText(R.string.level4);
                 //HomeFragment.proximityRating.setTextColor(Color.rgb(230,81,0));
