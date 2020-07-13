@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.profile.EditProfile">
+
+    <TextView
+        android:id="@+id/profileTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/product_sans_bold"
+        android:padding="20dp"
+        android:text="Edit Profile"
+        android:textColor="#257CE3"
+        android:textSize="45dp" />
+
+    <ImageView
+        android:id="@+id/editAvatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_below="@id/profileTitle"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_undraw_profile_pic"
+        android:elevation="15dp"
+        />
+
+    <TextView
+        android:id="@+id/fullNameLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@id/editAvatar"
+        android:drawableLeft="@drawable/ic_baseline_person_24"
+        android:drawablePadding="5dp"
+        android:text="Full Name"
+        android:textSize="18sp"
+
+        />
+
+    <EditText
+        android:id="@+id/fullNameEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="49dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@id/fullNameLabel"
+        android:text=" "
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/emailLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@id/fullNameEdit"
+        android:drawableLeft="@drawable/ic_baseline_email_24"
+        android:drawablePadding="5dp"
+        android:text="Email"
+        android:textSize="18sp"
+
+        />
+
+    <EditText
+        android:id="@+id/emailEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="49dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@id/emailLabel"
+        android:text=" "
+        android:textSize="20sp"
+        />
+
+    <TextView
+        android:id="@+id/phoneNumberLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@id/emailEdit"
+        android:drawableLeft="@drawable/ic_baseline_phone_24"
+        android:drawablePadding="5dp"
+        android:text="Phone Number"
+        android:textSize="18sp"
+
+        />
+
+    <EditText
+        android:id="@+id/phoneNumberEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="49dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@id/phoneNumberLabel"
+        android:text=" "
+        android:textSize="20sp"
+        />
+
+    <Button
+        android:id="@+id/editProfileButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="30dp"
+        android:layout_gravity="center"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/button_contrast_white"
+        android:text="Save"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="#257CE3"
+        android:stateListAnimator="@null"
+        />
+
+</RelativeLayout>
