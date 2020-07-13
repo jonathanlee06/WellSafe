@@ -62,7 +62,7 @@ public class HomeFragment extends Fragment {
     BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
     ArrayList<String> deviceNearby = new ArrayList<>();
     boolean devicePresent = false;
-    boolean checked = false;
+    public static boolean checked = false;
     public static SwitchButton distancingSwitch;
 
     private int LOCATION_PERMISSION_CODE = 1;
@@ -92,8 +92,10 @@ public class HomeFragment extends Fragment {
         distancingSwitch = (SwitchButton) view.findViewById(R.id.distancingStatusSwitch);
         if(checked){
             distancingSwitch.setChecked(true);
+            startTracing();
         } else{
             distancingSwitch.setChecked(false);
+            //stopTracing();
         }
         distancingSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -102,56 +104,22 @@ public class HomeFragment extends Fragment {
                 if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     if(isChecked){
                         checked = true;
-                        enableBT(view);
-                        statusCheck();
-                        proximityRating.setText(R.string.level0);
-
-                        // Tracing
-                        final IntentFilter filter = new IntentFilter();
-                        filter.addAction(BluetoothDevice.ACTION_FOUND);
-                        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-                        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-                        filter.addAction(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
-                        requireActivity().registerReceiver(mReceiver, filter);
-                        deviceNearby.clear();
-                        adapter.startDiscovery();
+                        startTracing();
 
                     } else{
                         checked = false;
-                        proximityRating.setText("Off");
-                        deviceNearby.clear();
-                        if (adapter != null) {
-                            adapter.cancelDiscovery();
-                        }
-                        // Unregister broadcast listeners
-                        requireActivity().unregisterReceiver(mReceiver);
+                        stopTracing();
                     }
 
                 } else {
                     requestLocationPermission();
                     if(isChecked){
                         checked = true;
-                        proximityRating.setText(R.string.level0);
-
-                        // Tracing
-                        final IntentFilter filter = new IntentFilter();
-                        filter.addAction(BluetoothDevice.ACTION_FOUND);
-                        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-                        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-                        filter.addAction(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
-                        requireActivity().registerReceiver(mReceiver, filter);
-                        deviceNearby.clear();
-                        adapter.startDiscovery();
+                        startTracing();
 
                     } else{
                         checked = false;
-                        proximityRating.setText("Off");
-                        deviceNearby.clear();
-                        if (adapter != null) {
-                            adapter.cancelDiscovery();
-                        }
-                        // Unregister broadcast listeners
-                        requireActivity().unregisterReceiver(mReceiver);
+                        stopTracing();
                     }
                 }
 
@@ -162,6 +130,33 @@ public class HomeFragment extends Fragment {
         
         
         return view;
+    }
+
+    public void startTracing(){
+        enableBT(view);
+        statusCheck();
+        proximityRating.setText(R.string.level0);
+
+        // Tracing
+        final IntentFilter filter = new IntentFilter();
+        filter.addAction(BluetoothDevice.ACTION_FOUND);
+        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+        filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+        filter.addAction(BluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
+        requireActivity().registerReceiver(mReceiver, filter);
+        deviceNearby.clear();
+        adapter.startDiscovery();
+    }
+
+    public void stopTracing() {
+        checked = false;
+        proximityRating.setText("Off");
+        deviceNearby.clear();
+        if (adapter != null) {
+            adapter.cancelDiscovery();
+        }
+        // Unregister broadcast listeners
+        requireActivity().unregisterReceiver(mReceiver);
     }
 
     @Override
@@ -236,6 +231,7 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION}, LOCATION_PERMISSION_CODE);
+                            statusCheck();
                         }
                     })
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

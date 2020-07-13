@@ -159,6 +159,11 @@ public class HomeActivity extends AppCompatActivity {
                     switch (item.getItemId()) {
                         case R.id.navigation_home:
                             selectedFragment = new HomeFragment();
+                            if(HomeFragment.checked){
+                                HomeFragment.checked = true;
+                            } else {
+                                HomeFragment.checked = false;
+                            }
                             break;
                         case R.id.navigation_stats:
                             selectedFragment = new StatsFragment();
