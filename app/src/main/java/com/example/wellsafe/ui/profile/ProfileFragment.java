@@ -22,8 +22,11 @@ import com.google.firebase.database.ValueEventListener;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     View view;
     DatabaseReference reference;
@@ -33,6 +36,7 @@ public class ProfileFragment extends Fragment {
     private TextView fullName;
     private TextView email;
     private TextView phoneNumber;
+    SwipeRefreshLayout swipeLayout;
 
     @Nullable
     @Override
@@ -67,10 +71,27 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        swipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.profileRefresh);
+        swipeLayout.setOnRefreshListener((SwipeRefreshLayout.OnRefreshListener) this);
+    }
+
+    @Override
+    public void onRefresh() {
+        swipeLayout.setRefreshing(false);
+        FragmentTransaction ftr = getFragmentManager().beginTransaction();
+        ftr.detach(ProfileFragment.this).attach(ProfileFragment.this).commit();
+    }
+
+
     private void loadLogInView() {
         Intent intent = new Intent(getActivity(), LogInActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
+
 }

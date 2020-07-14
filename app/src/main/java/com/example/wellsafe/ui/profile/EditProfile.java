@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wellsafe.HomeActivity;
+import com.example.wellsafe.LogInActivity;
 import com.example.wellsafe.R;
 import com.example.wellsafe.SignUpActivity;
 import com.example.wellsafe.api.FirebaseUtils;
@@ -85,7 +86,25 @@ public class EditProfile extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //if user pressed "yes", then he is allowed to exit from application
-                        finish();
+                        /*FirebaseUtils fb = new FirebaseUtils();
+                        fb.deleteProfile();*/
+                        String userID = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getKey();
+                        reference = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        user = FirebaseAuth.getInstance().getCurrentUser();
+                        reference.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(EditProfile.this, "Account Deleted", Toast.LENGTH_SHORT).show();
+                                            loadSignUpView();
+                                        }
+                                    }
+                                });
+                            }
+                        });
                     }
                 });
                 builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -132,38 +151,16 @@ public class EditProfile extends AppCompatActivity {
                                     Toast.makeText(EditProfile.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             });
-                            /*.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    Map<String, Object> postValues = new HashMap<String,Object>();
-                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                        postValues.put(dataSnapshot.getKey(),dataSnapshot.getValue());
-                                    }
-                                    postValues.put("email", email);
-                                    postValues.put("fullName", fullName);
-                                    postValues.put("phone", phone);
-                                    FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("User Information").updateChildren(postValues);
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });*/
-                            /*.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                            .child("User Information")
-                            .setValue(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(EditProfile.this, "Edit Profile Successful", Toast.LENGTH_SHORT).show();
-                                FirebaseUtils fb = new FirebaseUtils();
-                                fb.getProfileData();
-                                onBackPressed();
-                            }
-                    });*/
                 }
             }
         });
+    }
+
+    private void loadSignUpView() {
+        Intent intent = new Intent(this, SignUpActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
 }
