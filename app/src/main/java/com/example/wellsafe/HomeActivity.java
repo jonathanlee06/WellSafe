@@ -57,6 +57,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         BottomNavigationView navView = findViewById(R.id.nav_view);
+        //navView.setItemIconTintList(null);
         navView.setOnNavigationItemSelectedListener(navListener);
 
 
