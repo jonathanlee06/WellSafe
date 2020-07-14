@@ -3,12 +3,16 @@ package com.example.wellsafe.ui.profile;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,17 +35,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class EditProfile extends AppCompatActivity {
 
     DatabaseReference reference;
     FirebaseAuth auth;
     FirebaseUser user;
-    public static String fullName;
-    public static String email;
-    public static String phoneNumber;
-    private TextView fullNameEdit;
-    private TextView emailEdit;
-    private TextView phoneNumberEdit;
+    public static String fullNameProfile;
+    public static String emailProfile;
+    public static String phoneNumberProfile;
+    private EditText fullNameEdit;
+    private EditText emailEdit;
+    private EditText phoneNumberEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,25 +63,52 @@ public class EditProfile extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-        AuthCredential credential = EmailAuthProvider.getCredential("user@example.com", "password1234");
 
-        fullNameEdit = (TextView) findViewById((R.id.fullNameEdit));
-        emailEdit = (TextView) findViewById((R.id.emailEdit));
-        phoneNumberEdit = (TextView) findViewById((R.id.phoneNumberEdit));
+        fullNameEdit = (EditText) findViewById((R.id.fullNameEdit));
+        emailEdit = (EditText) findViewById((R.id.emailEdit));
+        phoneNumberEdit = (EditText) findViewById((R.id.phoneNumberEdit));
         Button save = (Button) findViewById(R.id.saveEditButton);
+        TextView deleteAccount = (TextView) findViewById(R.id.deleteAccount);
 
-        fullNameEdit.setText(fullName);
-        emailEdit.setText(email);
-        phoneNumberEdit.setText(phoneNumber);
+        fullNameEdit.setText(fullNameProfile, TextView.BufferType.EDITABLE);
+        emailEdit.setText(emailProfile, TextView.BufferType.EDITABLE);
+        phoneNumberEdit.setText(phoneNumberProfile, TextView.BufferType.EDITABLE);
 
-        final String userFullname = fullNameEdit.getText().toString();
-        final String userEmail = emailEdit.getText().toString();
-        final String userPhoneNumber = phoneNumberEdit.getText().toString();
+        deleteAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(EditProfile.this);
+                builder.setCancelable(false);
+                builder.setTitle("Warning!");
+                builder.setMessage("You are about to delete this account. Please be noted that this action is irreversible and all data associated with this account will be deleted. Are you sure you want to continue?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //if user pressed "yes", then he is allowed to exit from application
+                        finish();
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //if user select "No", just cancel this dialog and continue with app
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        });
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(fullNameEdit.getText().toString().isEmpty() || emailEdit.getText().toString().isEmpty() || phoneNumberEdit.getText().toString().isEmpty()){
+                final String fullName = fullNameEdit.getText().toString().trim();
+                final String email = emailEdit.getText().toString().trim();
+                final String phone = phoneNumberEdit.getText().toString().trim();
+
+
+                if(fullNameEdit.getText().toString().isEmpty() || phoneNumberEdit.getText().toString().isEmpty()){
                     AlertDialog.Builder builder = new AlertDialog.Builder(EditProfile.this);
                     builder.setMessage(R.string.signup_error_message)
                             .setTitle(R.string.signup_error_title)
@@ -82,33 +116,54 @@ public class EditProfile extends AppCompatActivity {
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 } else {
-                    user.updateEmail(userEmail).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Users userData = new Users(userFullname, userEmail, userPhoneNumber);
-                            FirebaseDatabase.getInstance().getReference("Users")
-                                    .child(user.getUid())
-                                    .child("User Information")
-                                    .setValue(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        Toast.makeText(EditProfile.this, "Edit Profile Successful", Toast.LENGTH_SHORT).show();
-                                        FirebaseUtils fb = new FirebaseUtils();
-                                        //fb.getProfileData();
-                                        onBackPressed();
+                    Users userData = new Users(fullName, email, phone);
+                    Log.e("userData", fullName + " " + email + " " + phone);
+                    FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("User Information")
+                            .setValue(userData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(EditProfile.this, "Edit Profile Successful", Toast.LENGTH_SHORT).show();
+                                    onBackPressed();
+                                    Fragment selectedFragment = new ProfileFragment();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(EditProfile.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            /*.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    Map<String, Object> postValues = new HashMap<String,Object>();
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        postValues.put(dataSnapshot.getKey(),dataSnapshot.getValue());
                                     }
-                                });
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(EditProfile.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                                    postValues.put("email", email);
+                                    postValues.put("fullName", fullName);
+                                    postValues.put("phone", phone);
+                                    FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("User Information").updateChildren(postValues);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });*/
+                            /*.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .child("User Information")
+                            .setValue(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(EditProfile.this, "Edit Profile Successful", Toast.LENGTH_SHORT).show();
+                                FirebaseUtils fb = new FirebaseUtils();
+                                fb.getProfileData();
+                                onBackPressed();
+                            }
+                    });*/
                 }
             }
         });
-
-
     }
+
 }

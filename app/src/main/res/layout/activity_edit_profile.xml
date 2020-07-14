@@ -84,6 +84,8 @@
         android:layout_below="@id/emailLabel"
         android:text=" "
         android:textSize="20sp"
+        android:inputType="none"
+        android:enabled="false"
         />
 
     <TextView
@@ -110,6 +112,23 @@
         android:layout_below="@id/phoneNumberLabel"
         android:text=" "
         android:textSize="20sp"
+        android:inputType="phone"
+        />
+
+    <TextView
+        android:id="@+id/deleteAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/phoneNumberEdit"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:drawableLeft="@drawable/ic_baseline_close_24"
+        android:text="Delete Account"
+        android:textAlignment="gravity"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#D32F2F"
         />
 
     <Button

@@ -23,12 +23,13 @@ public class FirebaseUtils {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
                     Users userInfo = snapshot.getValue(Users.class);
+
                     ProfileFragment.fullNameData = userInfo.fullName;
                     ProfileFragment.emailData = userInfo.email;
                     ProfileFragment.phoneNumberData = userInfo.phone;
-                    EditProfile.fullName = userInfo.fullName;
-                    EditProfile.email = userInfo.email;
-                    EditProfile.phoneNumber = userInfo.phone;
+                    EditProfile.fullNameProfile = userInfo.fullName;
+                    EditProfile.emailProfile = userInfo.email;
+                    EditProfile.phoneNumberProfile = userInfo.phone;
                 }
             }
 
