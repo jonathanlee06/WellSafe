@@ -71,6 +71,7 @@ public class CheckInCamera extends AppCompatActivity implements ZXingScannerView
 
         boolean valid = res.contains(delimiter);
 
+        //Todo: Fix valid checking QR Code
         if(valid){
             temp = res.split(delimiter);
             String identifier = temp[0];
@@ -140,7 +141,7 @@ public class CheckInCamera extends AppCompatActivity implements ZXingScannerView
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
-                    onBackPressed();
+                    //onBackPressed();
                 }
             });
             builder.show();
