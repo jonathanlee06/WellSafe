@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.example.wellsafe.SignUpActivity;
 import com.example.wellsafe.authentication.Users;
+import com.example.wellsafe.ui.checkin.CheckInSummary;
 import com.example.wellsafe.ui.profile.EditProfile;
 import com.example.wellsafe.ui.profile.ProfileFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,6 +42,27 @@ public class FirebaseUtils {
                     EditProfile.fullNameProfile = userInfo.fullName;
                     EditProfile.emailProfile = userInfo.email;
                     EditProfile.phoneNumberProfile = userInfo.phone;
+                    CheckInSummary.nameSummary = userInfo.fullName;
+                    CheckInSummary.phoneSummary = userInfo.phone;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
+    public void getSummaryData(){
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("User Information");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    Users userInfo = snapshot.getValue(Users.class);
+
+                    CheckInSummary.nameSummary = userInfo.fullName;
+                    CheckInSummary.phoneSummary = userInfo.phone;
                 }
             }
 

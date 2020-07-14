@@ -67,6 +67,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         String dateTime = date + " " + time;
         holder.location.setText(history.getLocation());
         holder.dateTime.setText(dateTime);
+        holder.temperature.setText(history.getTemperature());
 
     }
 

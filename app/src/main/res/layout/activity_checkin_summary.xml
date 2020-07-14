@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/gradient_back"
+    tools:context=".ui.checkin.CheckInSummary">
+
+    <TextView
+        android:id="@+id/summaryTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/product_sans_bold"
+        android:padding="20dp"
+        android:text="Summary"
+        android:textColor="#fff"
+        android:textSize="45dp" />
+
+    <Button
+        android:id="@+id/summaryClose"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="25dp"
+        android:background="@drawable/button_white"
+        android:text="Close"
+        android:textColor="#01BEC4"
+        />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/profileCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/summaryTitle"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="56dp"
+        android:layout_marginTop="30dp"
+        app:cardCornerRadius="10dp"
+        android:elevation="8dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:id="@+id/checkIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/ic_outline_check_circle_24"
+                />
+
+            <TextView
+                android:id="@+id/checkInSuccessTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/checkIcon"
+                android:layout_marginTop="20dp"
+                android:text="Check-In Successful"
+                android:fontFamily="@font/product_sans_regular"
+                android:textAlignment="center"
+                android:textSize="28sp"
+                android:textColor="#535353"
+                android:textStyle="bold"
+                />
+
+            <View
+                android:id="@+id/summaryDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_below="@id/checkInSuccessTitle"
+                android:background="@android:color/darker_gray"/>
+
+            <TextView
+                android:id="@+id/checkInSummaryTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/summaryDivider"
+                android:text="Check-In Summary"
+                android:fontFamily="@font/product_sans_regular"
+                android:textAlignment="center"
+                android:textSize="22sp"
+                android:textColor="#535353"
+                />
+
+            <TextView
+                android:id="@+id/locationLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/checkInSummaryTitle"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:drawableLeft="@drawable/ic_baseline_location_on_24"
+                android:drawablePadding="5dp"
+                android:text="Location"
+                android:textSize="18sp"
+                android:textColor="#535353"
+                />
+
+            <TextView
+                android:id="@+id/summaryLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/locationLabel"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="45dp"
+                android:text="UOWM KDU University College"
+                android:textSize="18sp"
+                android:textColor="#535353"
+                android:textStyle="bold"
+                />
+
+           <!-- <TextView
+                android:id="@+id/nameLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/summaryLocation"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:drawableLeft="@drawable/ic_baseline_person_24"
+                android:drawablePadding="5dp"
+                android:text="Name"
+                android:textSize="15sp"
+                android:textColor="#535353"
+                />
+
+            <TextView
+                android:id="@+id/summaryFullName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/nameLabel"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="45dp"
+                android:text="Jonathan Lee"
+                android:textSize="15sp"
+                android:textColor="#535353"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/phoneLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/summaryFullName"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:drawableLeft="@drawable/ic_baseline_phone_24"
+                android:drawablePadding="5dp"
+                android:text="Phone Number"
+                android:textSize="15sp"
+                android:textColor="#535353"
+                />
+
+            <TextView
+                android:id="@+id/summaryPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/phoneLabel"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="45dp"
+                android:text="+60199461823"
+                android:textSize="15sp"
+                android:textColor="#535353"
+                android:textStyle="bold"
+                />-->
+
+            <TextView
+                android:id="@+id/dateTimeLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/summaryLocation"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:drawableLeft="@drawable/ic_baseline_event_24"
+                android:drawablePadding="5dp"
+                android:text="Date &amp; Time"
+                android:textSize="18sp"
+                android:textColor="#535353"
+                />
+
+            <TextView
+                android:id="@+id/summaryDateTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/dateTimeLabel"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="45dp"
+                android:text="Jonathan Lee"
+                android:textSize="18sp"
+                android:textColor="#535353"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:id="@+id/temperatureLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/summaryDateTime"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:drawableLeft="@drawable/ic_baseline_track_changes_24"
+                android:drawablePadding="5dp"
+                android:text="Temperature"
+                android:textSize="18sp"
+                android:textColor="#535353"
+                />
+
+            <TextView
+                android:id="@+id/summaryTemperature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/temperatureLabel"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="45dp"
+                android:text="Jonathan Lee"
+                android:textSize="18sp"
+                android:textColor="#535353"
+                android:textStyle="bold"
+                />
+
+
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

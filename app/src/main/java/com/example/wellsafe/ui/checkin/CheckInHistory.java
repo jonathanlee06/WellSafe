@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.wellsafe.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,6 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +34,8 @@ public class CheckInHistory extends AppCompatActivity {
     RecyclerView recyclerView;
     HistoryAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
-    String [] location, dateTime;
+    TextView noHistory;
+    Button historyClose;
 
     ArrayList<CheckInData> historyList  = new ArrayList<CheckInData>();
 
@@ -45,6 +51,8 @@ public class CheckInHistory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkin_history);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerviewHistory);;
+        noHistory = (TextView) findViewById(R.id.noHistory);
+        historyClose = (Button) findViewById(R.id.historyClose);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
@@ -56,16 +64,17 @@ public class CheckInHistory extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-                    Iterable<DataSnapshot> historyChildren = snapshot.getChildren();
-                    for(DataSnapshot dataSnapshot: historyChildren){
+                    for(DataSnapshot dataSnapshot: snapshot.getChildren()){
                         Log.e("Key Value: ", dataSnapshot.getKey());
+                        Log.e("History: ", dataSnapshot.getValue().toString());
                         CheckInData h = dataSnapshot.getValue(CheckInData.class);
 
                         historyList.add(h);
-                        Log.e("History: ", h.location);
                     }
                     adapter = new HistoryAdapter(CheckInHistory.this, historyList);
                     recyclerView.setAdapter(adapter);
+                } else {
+                    noHistory.setVisibility(TextView.VISIBLE);
                 }
 
 
@@ -74,6 +83,13 @@ public class CheckInHistory extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+        historyClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
 

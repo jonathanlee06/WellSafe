@@ -23,6 +23,18 @@
         android:textColor="#fff"
         android:textSize="45dp" />
 
+    <Button
+        android:id="@+id/historyClose"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="25dp"
+        android:background="@drawable/button_white"
+        android:text="Close"
+        android:textColor="#01BEC4"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
 
         android:id="@+id/recyclerviewHistory"
@@ -33,6 +45,21 @@
         android:paddingRight="10dp"
         app:stackFromEnd="true"
         app:reverseLayout="true"
+        />
+
+    <TextView
+        android:id="@+id/noHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/historyTitle"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="No History Available"
+        android:textSize="25sp"
+        android:textColor="#fff"
+        android:textAlignment="center"
+        android:fontFamily="@font/product_sans_regular"
+        android:visibility="invisible"
         />
 
 </RelativeLayout>

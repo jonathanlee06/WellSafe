@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/wellsafe_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.profile.EditProfile"></activity>
+        <activity android:name=".ui.checkin.CheckInSummary"></activity>
+        <activity android:name=".ui.profile.EditProfile" />
         <activity
             android:name=".ui.checkin.CheckInHistory"
             android:screenOrientation="portrait" />
@@ -41,19 +42,18 @@
             android:name=".SignUpActivity"
             android:screenOrientation="portrait" />
     </application>
+
     <meta-data
         android:name="com.google.android.gms.vision.DEPENDENCIES"
         android:value="barcode" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <uses-permission-sdk-23 android:name="android.permission.BLUETOOTH" />
-
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission-sdk-23 android:name="android.permission.CAMERA" />
     <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
-
     <uses-permission-sdk-23 android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <uses-permission-sdk-23 android:name="android.permission.BLUETOOTH" />
 
 </manifest>
