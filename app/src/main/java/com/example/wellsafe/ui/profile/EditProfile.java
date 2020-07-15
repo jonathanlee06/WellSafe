@@ -69,6 +69,7 @@ public class EditProfile extends AppCompatActivity {
         emailEdit = (EditText) findViewById((R.id.emailEdit));
         phoneNumberEdit = (EditText) findViewById((R.id.phoneNumberEdit));
         Button save = (Button) findViewById(R.id.saveEditButton);
+        Button editClose = (Button) findViewById(R.id.editClose);
         TextView deleteAccount = (TextView) findViewById(R.id.deleteAccount);
 
         fullNameEdit.setText(fullNameProfile, TextView.BufferType.EDITABLE);
@@ -152,6 +153,13 @@ public class EditProfile extends AppCompatActivity {
                                 }
                             });
                 }
+            }
+        });
+
+        editClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
     }

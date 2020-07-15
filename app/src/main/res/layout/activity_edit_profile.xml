@@ -22,6 +22,19 @@
         android:textColor="#257CE3"
         android:textSize="45dp" />
 
+    <Button
+        android:id="@+id/editClose"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="25dp"
+        android:background="@drawable/button_contrast_white"
+        android:text="Close"
+        android:textColor="@color/colorMain"
+        android:stateListAnimator="@null"
+        />
+
     <ImageView
         android:id="@+id/editAvatar"
         android:layout_width="wrap_content"

@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -72,9 +73,10 @@ public class CheckInCamera extends AppCompatActivity implements ZXingScannerView
         boolean valid = res.contains(delimiter);
 
         //Todo: Fix valid checking QR Code
-        if(valid){
+        if(!valid){
             temp = res.split(delimiter);
             String identifier = temp[0];
+            Log.e("Identifier", identifier);
             final String location = temp[1];
 
 
@@ -103,6 +105,7 @@ public class CheckInCamera extends AppCompatActivity implements ZXingScannerView
                             public void onComplete(@NonNull Task<Void> task) {
                                 //Toast.makeText(HomeActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
                                 setSummary(location, currentDate, currentTime, temperature);
+                                onBackPressed();
                                 Intent intent = new Intent(CheckInCamera.this, CheckInSummary.class);
                                 startActivity(intent);
                             }
