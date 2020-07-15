@@ -207,19 +207,15 @@
     </GridLayout>
 
 
-    <TextView
-        android:id="@+id/text_home"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/notificationButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_below="@+id/homeGrid2"
-        android:layout_centerVertical="true"
-        android:text="This is home"
-        android:textAlignment="center"
-        android:textSize="20sp"
-         />
+        android:layout_below="@id/homeGrid2"
+        android:text="Show Notification"
+        android:layout_centerHorizontal="true"
+
+        />
 
 
 </RelativeLayout>
