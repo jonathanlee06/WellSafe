@@ -32,6 +32,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.wellsafe.HomeActivity;
 import com.example.wellsafe.R;
 import com.example.wellsafe.ui.checkin.CheckInCamera;
 import com.kyleduo.switchbutton.SwitchButton;
@@ -64,6 +65,7 @@ public class HomeFragment extends Fragment {
     public static TextView totalRecoveries;
     public static TextView text_home;
     public static TextView proximityRating;
+    public static  TextView proximityRatingOff;
     JSONObject malaysiaData;
     public static int confirmed;
     public static int recovered;
@@ -71,10 +73,11 @@ public class HomeFragment extends Fragment {
     //Tracing
     BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
     ArrayList<String> deviceNearby = new ArrayList<>();
-    boolean devicePresent = false;
+    boolean devicePresent;
     public static boolean checked = false;
     public static SwitchButton distancingSwitch;
-    private boolean isRegistered;
+    boolean isRegistered;
+    boolean devicePresentCheck;
 
     private int LOCATION_PERMISSION_CODE = 1;
     String[] PERMISSIONS = {
@@ -97,6 +100,7 @@ public class HomeFragment extends Fragment {
         totalRecoveries = (TextView) view.findViewById(R.id.totalRecoveries);
         Button notificationButton = (Button) view.findViewById(R.id.notificationButton);
         proximityRating = (TextView) view.findViewById(R.id.proximityRating);
+        proximityRatingOff = (TextView) view.findViewById(R.id.proximityRatingOff);
         totalCases.setText(String.valueOf(confirmed));
         totalRecoveries.setText(String.valueOf(recovered));
 
@@ -116,9 +120,13 @@ public class HomeFragment extends Fragment {
                     if(isChecked){
                         checked = true;
                         startTracing();
+                        proximityRating.setVisibility(View.VISIBLE);
+                        proximityRatingOff.setVisibility(View.INVISIBLE);
                     } else{
                         checked = false;
                         stopTracing();
+                        proximityRating.setVisibility(View.INVISIBLE);
+                        proximityRatingOff.setVisibility(View.VISIBLE);
                     }
 
                 } else {
@@ -126,10 +134,13 @@ public class HomeFragment extends Fragment {
                     if(isChecked){
                         checked = true;
                         startTracing();
-
+                        proximityRating.setVisibility(View.VISIBLE);
+                        proximityRatingOff.setVisibility(View.INVISIBLE);
                     } else{
                         checked = false;
                         stopTracing();
+                        proximityRating.setVisibility(View.INVISIBLE);
+                        proximityRatingOff.setVisibility(View.VISIBLE);
                     }
                 }
 
@@ -141,7 +152,7 @@ public class HomeFragment extends Fragment {
         notificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addNotification();
+                ((HomeActivity) getActivity()).addNotification();
             }
         });
         
@@ -153,6 +164,7 @@ public class HomeFragment extends Fragment {
         enableBT(view);
         statusCheck();
         proximityRating.setText(R.string.level0);
+        proximityRating.setTextColor(ContextCompat.getColor(getContext(), R.color.textDefaultColor));
 
         // Tracing
         final IntentFilter filter = new IntentFilter();
@@ -165,16 +177,7 @@ public class HomeFragment extends Fragment {
         deviceNearby.clear();
         adapter.startDiscovery();
 
-        if(devicePresent == true){
-            HomeFragment.proximityRating.setText(R.string.level4);
-            HomeFragment.proximityRating.setTextColor(Color.RED);
-            addNotification();
-            //adapter.startDiscovery();
-        } else {
-            HomeFragment.proximityRating.setText(R.string.level1);
-            HomeFragment.proximityRating.setTextColor(Color.rgb(46,125,50));
-            //adapter.startDiscovery();
-        }
+
     }
 
     public void stopTracing() {
@@ -295,6 +298,9 @@ public class HomeFragment extends Fragment {
                 //discovery starts, we can show progress dialog or perform other tasks
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
                 //discovery finishes, dismiss progress dialog
+                HomeFragment.proximityRating.setText(R.string.level1);
+                HomeFragment.proximityRating.setTextColor(Color.rgb(46,125,50));
+                //deviceNearby.clear();
                 adapter.startDiscovery();
             } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 //bluetooth device found
@@ -304,55 +310,86 @@ public class HomeFragment extends Fragment {
 
                 if(deviceType == BluetoothDevice.DEVICE_TYPE_CLASSIC)
                 {
-                    devicePresent = true;
-                    deviceNearby.add(device.getName());
-                    Log.e("Bluetooth Device", device.getName());
+                    boolean deviceList = deviceNearby.isEmpty();
+
+                    if(deviceList){
+                        deviceNearby.add(device.getName());
+                        Log.e("Bluetooth Device", device.getName());
+                        int numDevice = deviceNearby.size();
+                        Log.e("Bluetooth Device", device.getName());
+                        Log.e("Bluetooth Device Number", String.valueOf(numDevice));
+                        if(numDevice >= 1){
+                            HomeFragment.proximityRating.setText(R.string.level4);
+                            HomeFragment.proximityRating.setTextColor(Color.RED);
+                            //((HomeActivity) getActivity()).addNotification();
+                            //deviceNearby.clear();
+                            adapter.startDiscovery();
+                        } else {
+                            HomeFragment.proximityRating.setText(R.string.level1);
+                            HomeFragment.proximityRating.setTextColor(Color.rgb(46,125,50));
+                            deviceNearby.clear();
+                            adapter.startDiscovery();
+
+                        }
+                    } else {
+                        String firstDevice = deviceNearby.get(0);
+                        String newDevice = device.getName();
+
+                        if(newDevice.equals(firstDevice)){
+                            HomeFragment.proximityRating.setText(R.string.level4);
+                            HomeFragment.proximityRating.setTextColor(Color.RED);
+                            ((HomeActivity) getActivity()).addNotification();
+                            deviceNearby.clear();
+                            adapter.startDiscovery();
+                        } /*else if(firstDevice.isEmpty()){
+                            deviceNearby.add(device.getName());
+                            Log.e("Bluetooth Device", device.getName());
+                            int numDevice = deviceNearby.size();
+                            Log.e("Bluetooth Device", device.getName());
+                            Log.e("Bluetooth Device Number", String.valueOf(numDevice));
+                            if(numDevice >= 1){
+                                HomeFragment.proximityRating.setText(R.string.level4);
+                                HomeFragment.proximityRating.setTextColor(Color.RED);
+                                ((HomeActivity) getActivity()).addNotification();
+                                //deviceNearby.clear();
+                                adapter.startDiscovery();
+                            } else {
+                                HomeFragment.proximityRating.setText(R.string.level1);
+                                HomeFragment.proximityRating.setTextColor(Color.rgb(46,125,50));
+                                //deviceNearby.clear();
+                                adapter.startDiscovery();
+                            }
+
+                        }*/
+                    }
+
+
+
+
+
+
                 }
                 else if(deviceType == BluetoothDevice.DEVICE_TYPE_LE)
                 {
-                    devicePresent = false;
+                    //devicePresent = false;
                 }
                 else if(deviceType == BluetoothDevice.DEVICE_TYPE_DUAL)
                 {
-                    devicePresent = false;
+                    //devicePresent = false;
                 }
                 else if(deviceType == BluetoothDevice.DEVICE_TYPE_UNKNOWN)
                 {
-                    devicePresent = false;
+                    //devicePresent = false;
                 }
+            } else {
+                HomeFragment.proximityRating.setText(R.string.level1);
+                HomeFragment.proximityRating.setTextColor(Color.rgb(46,125,50));
+                //deviceNearby.clear();
+                adapter.startDiscovery();
             }
         }
     };
 
-    private void addNotification(){
-        NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(getActivity().NOTIFICATION_SERVICE);
-        String NOTIFICATION_CHANNEL_ID = "my_channel_id";
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "My Notifications", NotificationManager.IMPORTANCE_MAX);
-            //Configure the notification channel
-            notificationChannel.setDescription("Channel Description");
-            notificationChannel.enableLights(true);
-            notificationChannel.setLightColor(Color.RED);
-            notificationChannel.setVibrationPattern(new long[] {0, 100, 500, 1000});
-            notificationChannel.enableVibration(true);
-            notificationManager.createNotificationChannel(notificationChannel);
-
-        }
-
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getContext(), NOTIFICATION_CHANNEL_ID);
-
-        notificationBuilder.setAutoCancel(true)
-                .setDefaults(Notification.DEFAULT_ALL)
-                .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.mipmap.wellsafe_notext_logo_foreground)
-                .setTicker("365")
-                .setContentInfo("Info")
-                .setContentTitle("Social Distancing Alert")
-                .setContentText("You're getting too close with another person, please practice social distancing");
-
-        notificationManager.notify(1, notificationBuilder.build());
-    }
 
     private void get_json() throws JSONException {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());

@@ -153,7 +153,7 @@
             app:cardBackgroundColor="#fff"
             >
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
@@ -162,11 +162,11 @@
 
                 <TextView
                     android:id="@+id/distancingTitle"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/product_sans_regular"
 
-                    android:textAlignment="gravity"
+                    android:textAlignment="center"
                     android:text="Social Distancing Status"
                     android:textSize="20dp" />
 
@@ -175,7 +175,9 @@
                     style="@style/SwitchButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/distancingTitle"
+                    android:layout_centerHorizontal="true"
                     android:textColor="@color/custom_text_state_color"
                     android:textSize="16dp"
                     app:kswTextAdjust="-2dp"
@@ -190,16 +192,32 @@
                     android:layout_height="80dp"
                     android:layout_marginTop="10dp"
                     android:layout_margin="20dp"
-                    android:layout_below="@id/distancingTitle"
-                    android:gravity="center"
+                    android:layout_below="@id/distancingStatusSwitch"
+                    android:layout_centerHorizontal="true"
                     android:fontFamily="@font/product_sans_bold"
+                    android:visibility="invisible"
                     android:textAlignment="center"
+                    android:textColor="#808080"
+                    android:text="Off"
+                    android:textSize="35dp" />
 
+                <TextView
+                    android:id="@+id/proximityRatingOff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_margin="20dp"
+                    android:layout_below="@id/distancingStatusSwitch"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/product_sans_bold"
+                    android:visibility="visible"
+                    android:textAlignment="center"
+                    android:textColor="#808080"
                     android:text="Off"
                     android:textSize="35dp" />
 
 
-            </LinearLayout>
+            </RelativeLayout>
 
 
         </androidx.cardview.widget.CardView>
