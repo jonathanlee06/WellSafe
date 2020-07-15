@@ -6,6 +6,11 @@
     <color name="colorMain">#257CE3</color>
     <color name="colorSub">#01BEC4</color>
     <color name="textDefaultColor">#808080</color>
+    <color name="notWhite">#edf0f3</color>
+    <color name="notWhite2">#C0C2C5</color>
+    <color name="closeToWhite">#EAECF3</color>
+    <color name="red">#b10207</color>
+    <color name="green">#2E7D32</color>
 
     <color name="colorLevel1">#2E7D32</color>
     <color name="colorLevel2">#F9A825</color>

@@ -15,9 +15,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextPaint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,6 +69,7 @@ public class HomeFragment extends Fragment {
     public static TextView text_home;
     public static TextView proximityRating;
     public static  TextView proximityRatingOff;
+    TextView distancingTitle;
     JSONObject malaysiaData;
     public static int confirmed;
     public static int recovered;
@@ -88,16 +92,36 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-         /*try {
-            get_json();
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
-
         view = inflater.inflate(R.layout.fragment_home, container, false);
+        distancingTitle = (TextView) view.findViewById(R.id.distancingTitle);
         totalCases = (TextView) view.findViewById(R.id.totalCases);
         totalRecoveries = (TextView) view.findViewById(R.id.totalRecoveries);
+
+        TextPaint paint = totalCases.getPaint();
+        TextPaint paint2 = totalRecoveries.getPaint();
+        TextPaint paint3 = distancingTitle.getPaint();
+        float width = paint.measureText("0000");
+        float width2 = paint3.measureText("Social Distancing Status");
+
+        Shader textShader = new LinearGradient(0, 0, width, totalCases.getTextSize(),
+                new int[]{
+                        Color.parseColor("#D31027"),
+                        Color.parseColor("#EA384D"),
+                }, null, Shader.TileMode.CLAMP);
+        Shader textShader2 = new LinearGradient(0, 0, width, totalRecoveries.getTextSize(),
+                new int[]{
+                        Color.parseColor("#20830A"),
+                        Color.parseColor("#26982B"),
+                }, null, Shader.TileMode.CLAMP);
+        Shader textShader3 = new LinearGradient(0, 0, width2, distancingTitle.getTextSize(),
+                new int[]{
+                        Color.parseColor("#257CE3"),
+                        Color.parseColor("#01BEC4"),
+                }, null, Shader.TileMode.CLAMP);
+        totalCases.getPaint().setShader(textShader);
+        totalRecoveries.getPaint().setShader(textShader2);
+        //distancingTitle.getPaint().setShader(textShader3);
+
         Button notificationButton = (Button) view.findViewById(R.id.notificationButton);
         proximityRating = (TextView) view.findViewById(R.id.proximityRating);
         proximityRatingOff = (TextView) view.findViewById(R.id.proximityRatingOff);
