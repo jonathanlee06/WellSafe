@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -50,8 +51,10 @@ public class CheckInCamera extends AppCompatActivity implements ZXingScannerView
             this.getSupportActionBar().hide();
         }
         catch (NullPointerException e){}
+        setContentView(R.layout.activity_checkin_camera);
+        ViewGroup contentFrame = (ViewGroup) findViewById(R.id.content_frame);
         ScannerView = new ZXingScannerView(this);
-        setContentView(ScannerView);
+        contentFrame.addView(ScannerView);
 
 
     }

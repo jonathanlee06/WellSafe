@@ -6,4 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".ui.checkin.CheckInCamera">
 
+    <TextView
+        android:padding="10dp"
+        android:textColor="@android:color/white"
+        android:textSize="18dp"
+        android:background="@android:color/black"
+        android:text="Place the QR Code inside the box to scan"
+        android:id="@+id/tv_scan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        tools:ignore="MissingConstraints" />
+
+    <FrameLayout
+        android:layout_below="@+id/tv_scan"
+        android:id="@+id/content_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
