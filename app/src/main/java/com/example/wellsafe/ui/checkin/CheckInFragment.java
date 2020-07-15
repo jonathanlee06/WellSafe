@@ -21,6 +21,7 @@ import org.w3c.dom.Text;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -32,19 +33,45 @@ public class CheckInFragment extends Fragment implements View.OnClickListener{
 
     public static TextView result;
     public static TextView identifierResult;
+    public static CardView fragmentHistoryCard;
     Button checkIn;
     Button viewHistory;
+    TextView latestCheckInTitle;
+    public static TextView locationName;
+    public static TextView dateTime;
+    public static TextView temp;
     View view;
     private int CAMERA_PERMISSION_CODE = 1;
+
+    public static String locationFragment;
+    public static String dateTimeFragment;
+    public static String temperatureFragment;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view =  inflater.inflate(R.layout.fragment_checkin, container, false);
-        result = (TextView) view.findViewById(R.id.result);
-        identifierResult = (TextView) view.findViewById(R.id.identifierResult);
+        /*result = (TextView) view.findViewById(R.id.result);
+        identifierResult = (TextView) view.findViewById(R.id.identifierResult);*/
         checkIn = (Button) view.findViewById(R.id.btnScan);
         viewHistory = (Button) view.findViewById(R.id.btnHistory);
+        fragmentHistoryCard = (CardView) view.findViewById(R.id.fragmentHistoryCard);
+        latestCheckInTitle = (TextView) view.findViewById(R.id.latestCheckInTitle);
+        locationName = (TextView) view.findViewById(R.id.fragmentLocationName);
+        dateTime = (TextView) view.findViewById(R.id.fragmentDateTime);
+        temp = (TextView) view.findViewById(R.id.fragmentTemp);
+
+        if(locationFragment == null || dateTimeFragment == null || temperatureFragment == null){
+            fragmentHistoryCard.setVisibility(View.INVISIBLE);
+            latestCheckInTitle.setVisibility(View.INVISIBLE);
+        } else {
+            fragmentHistoryCard.setVisibility(View.VISIBLE);
+            latestCheckInTitle.setVisibility(View.VISIBLE);
+            locationName.setText(locationFragment);
+            dateTime.setText(dateTimeFragment);
+            temp.setText(temperatureFragment);
+        }
+
         checkIn.setOnClickListener(this);
         viewHistory.setOnClickListener(new View.OnClickListener() {
             @Override

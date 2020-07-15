@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -182,6 +183,15 @@ public class CheckInCamera extends AppCompatActivity implements ZXingScannerView
         CheckInSummary.locationSummary = location;
         CheckInSummary.dateTimeSummary = dataTime;
         CheckInSummary.temperatureSummary = temperature;
+        CheckInFragment.locationFragment = location;
+        CheckInFragment.dateTimeFragment = dataTime;
+        CheckInFragment.temperatureFragment = temperature;
+
+        CheckInFragment.fragmentHistoryCard.setVisibility(View.VISIBLE);
+        CheckInFragment.locationName.setText(CheckInFragment.locationFragment);
+        CheckInFragment.dateTime.setText(CheckInFragment.dateTimeFragment);
+        CheckInFragment.temp.setText(CheckInFragment.temperatureFragment);
+
         FirebaseUtils fb = new FirebaseUtils();
         fb.getSummaryData();
     }
