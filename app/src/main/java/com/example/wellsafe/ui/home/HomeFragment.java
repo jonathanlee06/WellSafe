@@ -122,7 +122,7 @@ public class HomeFragment extends Fragment {
         totalRecoveries.getPaint().setShader(textShader2);
         //distancingTitle.getPaint().setShader(textShader3);
 
-        Button notificationButton = (Button) view.findViewById(R.id.notificationButton);
+
         proximityRating = (TextView) view.findViewById(R.id.proximityRating);
         proximityRatingOff = (TextView) view.findViewById(R.id.proximityRatingOff);
         totalCases.setText(String.valueOf(confirmed));
@@ -171,13 +171,6 @@ public class HomeFragment extends Fragment {
 
             }
 
-        });
-
-        notificationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((HomeActivity) getActivity()).addNotification();
-            }
         });
         
         
