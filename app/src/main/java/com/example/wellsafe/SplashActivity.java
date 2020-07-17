@@ -63,7 +63,7 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-
+                // Loading Screen
                 if(!backPressToExit){
                     if(userFirebase == null){
                         //not logged in, launch the login activity
@@ -72,8 +72,6 @@ public class SplashActivity extends AppCompatActivity {
                         loadHomeView();
                     }
                 }
-
-
             }
         }, 1000  );
 
@@ -116,13 +114,8 @@ public class SplashActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        //Log.e("API Response", response.toString());
                         try {
                             malaysiaData = response.getJSONObject("data");
-                            //totalCases = (TextView) getActivity().findViewById(R.id.totalCases);
-                            String country = malaysiaData.getString("location");
-                            //HomeFragment.confirmed = malaysiaData.getInt("confirmed");
-                            //HomeFragment.recovered = malaysiaData.getInt("recovered");
                             int confirmed = malaysiaData.getInt("confirmed");
                             int recovered = malaysiaData.getInt("recovered");
                             HomeFragment.confirmed = confirmed;
@@ -131,9 +124,6 @@ public class SplashActivity extends AppCompatActivity {
                             StatsFragment.recovered = recovered;
                             StatsFragment.deaths = malaysiaData.getInt("deaths");
                             StatsFragment.active = malaysiaData.getInt("active");
-
-
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -146,20 +136,7 @@ public class SplashActivity extends AppCompatActivity {
                     }
                 }
         );
-
         requestQueue.add(objectRequest);
-
-        /*    JSONObject jsonObject = new JSONObject(inputData);
-            JSONObject malaysiaData = jsonObject.getJSONObject("data");
-
-            //totalCases.setText(malaysiaData.getString("confirmed"));
-        String confirmed = malaysiaData.getString("confirmed");
-        Log.d("API test", confirmed + " or not");
-
-            //malaysiaList.add(jsonObject.getString("data"));
-            /* malaysiaList.add(jsonObject.getString("deaths"));
-            malaysiaList.add(jsonObject.getString("recovered"));
-            malaysiaList.add(jsonObject.getString("active")); */
     }
 
     private void loadLogInView() {

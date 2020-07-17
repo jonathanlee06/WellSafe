@@ -35,13 +35,12 @@ public class SignUpActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try
         {
-            this.getSupportActionBar().hide();
+            this.getSupportActionBar().hide();  // Hide Action Bar
         }
         catch (NullPointerException e){}
         setContentView(R.layout.activity_sign_up);
@@ -90,14 +89,12 @@ public class SignUpActivity extends AppCompatActivity {
                             .setPositiveButton(android.R.string.ok, null);
                     AlertDialog dialog = builder.create();
                     dialog.show();
-
                 } else {
                     authFirebase.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>(){
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task){
                                     if(task.isSuccessful()){
-
                                         Users userData = new Users(fullName, email, phoneNumber);
                                         FirebaseDatabase.getInstance().getReference("Users")
                                                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
@@ -112,9 +109,6 @@ public class SignUpActivity extends AppCompatActivity {
                                                 startActivity(intent);
                                             }
                                         });
-
-
-
                                     } else {
                                         AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
                                         builder.setMessage(task.getException().getMessage())

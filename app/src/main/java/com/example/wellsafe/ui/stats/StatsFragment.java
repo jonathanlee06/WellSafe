@@ -61,12 +61,6 @@ public class StatsFragment extends Fragment {
         totalDeaths.setText(String.valueOf(deaths));
         totalActive.setText(String.valueOf(active));
 
-        // Graphs
-        /*lineChart = (LineChart) view.findViewById(R.id.activeLineChart);
-        MyMarkerView mv = new MyMarkerView(getContext(), R.layout.custom_marker_view);
-        mv.setChartView(lineChart);
-        lineChart.setMarker(mv);
-        renderData();*/
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         List<String> xAxisValues = new ArrayList<>(Arrays.asList("0", "11/7", "12/7", "13/7", "14/7", "15/7", "16/7"));
@@ -114,8 +108,6 @@ public class StatsFragment extends Fragment {
         set1.setLineWidth(4f);
         set1.setCircleRadius(3f);
         set1.setDrawValues(false);
-        //set1.setCircleHoleColor(getResources().getColor(R.color.pie_color_4));
-        //set1.setCircleColor(getResources().getColor(R.color.pie_color_4));
 
         //String setter in x-Axis
         lineChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAxisValues));

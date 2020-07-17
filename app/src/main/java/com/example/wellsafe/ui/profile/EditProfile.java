@@ -87,8 +87,6 @@ public class EditProfile extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //if user pressed "yes", then he is allowed to exit from application
-                        /*FirebaseUtils fb = new FirebaseUtils();
-                        fb.deleteProfile();*/
                         String userID = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).getKey();
                         reference = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
                         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -126,7 +124,6 @@ public class EditProfile extends AppCompatActivity {
                 final String fullName = fullNameEdit.getText().toString().trim();
                 final String email = emailEdit.getText().toString().trim();
                 final String phone = phoneNumberEdit.getText().toString().trim();
-
 
                 if(fullNameEdit.getText().toString().isEmpty() || phoneNumberEdit.getText().toString().isEmpty()){
                     AlertDialog.Builder builder = new AlertDialog.Builder(EditProfile.this);

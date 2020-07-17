@@ -51,8 +51,7 @@ public class CheckInFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view =  inflater.inflate(R.layout.fragment_checkin, container, false);
-        /*result = (TextView) view.findViewById(R.id.result);
-        identifierResult = (TextView) view.findViewById(R.id.identifierResult);*/
+
         checkIn = (Button) view.findViewById(R.id.btnScan);
         viewHistory = (Button) view.findViewById(R.id.btnHistory);
         fragmentHistoryCard = (CardView) view.findViewById(R.id.fragmentHistoryCard);

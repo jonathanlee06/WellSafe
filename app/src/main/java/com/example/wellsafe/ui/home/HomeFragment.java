@@ -84,9 +84,6 @@ public class HomeFragment extends Fragment {
     boolean devicePresentCheck;
 
     private int LOCATION_PERMISSION_CODE = 1;
-    String[] PERMISSIONS = {
-
-    };
 
 
     @Nullable
@@ -97,6 +94,7 @@ public class HomeFragment extends Fragment {
         totalCases = (TextView) view.findViewById(R.id.totalCases);
         totalRecoveries = (TextView) view.findViewById(R.id.totalRecoveries);
 
+        // Gradient Text Effect //
         TextPaint paint = totalCases.getPaint();
         TextPaint paint2 = totalRecoveries.getPaint();
         TextPaint paint3 = distancingTitle.getPaint();
@@ -120,8 +118,7 @@ public class HomeFragment extends Fragment {
                 }, null, Shader.TileMode.CLAMP);
         totalCases.getPaint().setShader(textShader);
         totalRecoveries.getPaint().setShader(textShader2);
-        //distancingTitle.getPaint().setShader(textShader3);
-
+        // End Gradient Text Effect //
 
         proximityRating = (TextView) view.findViewById(R.id.proximityRating);
         proximityRatingOff = (TextView) view.findViewById(R.id.proximityRatingOff);
@@ -214,20 +211,7 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        /* try {
-            get_json();
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } */
-    }
-
-    @Override
     public void onDestroy() {
-        /*unregisterReceiver(mReceiver);
-        adapter.cancelDiscovery();*/
         super.onDestroy();
 
         // Make sure we're not doing discovery anymore
@@ -310,7 +294,6 @@ public class HomeFragment extends Fragment {
             String action = intent.getAction();
             int numberOfDevice = deviceNearby.size();
 
-
             if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
                 //discovery starts, we can show progress dialog or perform other tasks
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
@@ -358,90 +341,26 @@ public class HomeFragment extends Fragment {
                             ((HomeActivity) getActivity()).addNotification();
                             deviceNearby.clear();
                             adapter.startDiscovery();
-                        } /*else if(firstDevice.isEmpty()){
-                            deviceNearby.add(device.getName());
-                            Log.e("Bluetooth Device", device.getName());
-                            int numDevice = deviceNearby.size();
-                            Log.e("Bluetooth Device", device.getName());
-                            Log.e("Bluetooth Device Number", String.valueOf(numDevice));
-                            if(numDevice >= 1){
-                                HomeFragment.proximityRating.setText(R.string.level4);
-                                HomeFragment.proximityRating.setTextColor(Color.RED);
-                                ((HomeActivity) getActivity()).addNotification();
-                                //deviceNearby.clear();
-                                adapter.startDiscovery();
-                            } else {
-                                HomeFragment.proximityRating.setText(R.string.level1);
-                                HomeFragment.proximityRating.setTextColor(Color.rgb(46,125,50));
-                                //deviceNearby.clear();
-                                adapter.startDiscovery();
-                            }
-
-                        }*/
+                        }
                     }
-
-
-
-
-
-
                 }
                 else if(deviceType == BluetoothDevice.DEVICE_TYPE_LE)
                 {
-                    //devicePresent = false;
+
                 }
                 else if(deviceType == BluetoothDevice.DEVICE_TYPE_DUAL)
                 {
-                    //devicePresent = false;
+
                 }
                 else if(deviceType == BluetoothDevice.DEVICE_TYPE_UNKNOWN)
                 {
-                    //devicePresent = false;
+
                 }
             } else {
                 HomeFragment.proximityRating.setText(R.string.level1);
                 HomeFragment.proximityRating.setTextColor(Color.rgb(46,125,50));
-                //deviceNearby.clear();
                 adapter.startDiscovery();
             }
         }
     };
-
-
-    private void get_json() throws JSONException {
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        String URL = "https://covid2019-api.herokuapp.com/v2/country/malaysia";
-
-        JsonObjectRequest objectRequest = new JsonObjectRequest(
-                Request.Method.GET,
-                URL,
-                null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        //Log.e("API Response", response.toString());
-                        try {
-                            malaysiaData = response.getJSONObject("data");
-                            //totalCases = (TextView) getActivity().findViewById(R.id.totalCases);
-                            String country = malaysiaData.getString("location");
-                            confirmed = malaysiaData.getInt("confirmed");
-                            recovered = malaysiaData.getInt("recovered");
-
-                            //Log.e("location response", malaysiaData.getString("data"));
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("Error", error.toString());
-                    }
-                }
-        );
-
-        requestQueue.add(objectRequest);
-    }
 }

@@ -51,7 +51,6 @@ public class HomeActivity extends AppCompatActivity {
 
     JSONObject malaysiaData;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try
@@ -61,33 +60,16 @@ public class HomeActivity extends AppCompatActivity {
         }
         catch (NullPointerException | JSONException e){}
         super.onCreate(savedInstanceState);
+        // Get Profile data for Profile Fragment
         FirebaseUtils fb = new FirebaseUtils();
         fb.getProfileData();
         setContentView(R.layout.activity_home);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        // Generate bottom navigation bar
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        //navView.setItemIconTintList(null);
         navView.setOnNavigationItemSelectedListener(navListener);
-
-
-
-
-
-        //new HomeFragment();
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        /*AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_stats, R.id.nav_checkin, R.id.nav_profile)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);*/
     }
-
-
-
-
-
+    
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -96,14 +78,14 @@ public class HomeActivity extends AppCompatActivity {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //if user pressed "yes", then he is allowed to exit from application
+                //if user pressed "yes", application will close
                 finish();
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //if user select "No", just cancel this dialog and continue with app
+                //if user select "No", dialog will be closed
                 dialog.cancel();
             }
         });
@@ -124,7 +106,6 @@ public class HomeActivity extends AppCompatActivity {
             notificationChannel.setVibrationPattern(new long[] {0, 100, 500, 1000});
             notificationChannel.enableVibration(true);
             notificationManager.createNotificationChannel(notificationChannel);
-
         }
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
@@ -146,6 +127,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void get_json() throws JSONException {
+        // Function to fetch COVID-19 API data
+
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         String URL = "https://covid2019-api.herokuapp.com/v2/country/malaysia";
 
@@ -156,19 +139,12 @@ public class HomeActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        //Log.e("API Response", response.toString());
                         try {
                             malaysiaData = response.getJSONObject("data");
-                            //totalCases = (TextView) getActivity().findViewById(R.id.totalCases);
-                            String country = malaysiaData.getString("location");
                             int confirmed = malaysiaData.getInt("confirmed");
                             int recovered = malaysiaData.getInt("recovered");
                             HomeFragment.confirmed = malaysiaData.getInt("confirmed");
                             HomeFragment.recovered = malaysiaData.getInt("recovered");
-                            //StatsFragment.confirmed = malaysiaData.getInt("confirmed");
-                            //StatsFragment.recovered = malaysiaData.getInt("recovered");
-                            //StatsFragment.deaths = malaysiaData.getInt("deaths");
-                            //StatsFragment.active = malaysiaData.getInt("active");
 
                             // Set Text
                             HomeFragment.totalCases.setText(String.valueOf(confirmed));

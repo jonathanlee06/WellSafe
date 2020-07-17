@@ -38,7 +38,6 @@ public class CheckInHistory extends AppCompatActivity {
     Button historyClose;
 
     ArrayList<CheckInData> historyList  = new ArrayList<CheckInData>();
-
     DatabaseReference reference;
 
     @Override
@@ -50,6 +49,7 @@ public class CheckInHistory extends AppCompatActivity {
         catch (NullPointerException e){}
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkin_history);
+
         recyclerView = (RecyclerView) findViewById(R.id.recyclerviewHistory);;
         noHistory = (TextView) findViewById(R.id.noHistory);
         historyClose = (Button) findViewById(R.id.historyClose);
@@ -68,7 +68,6 @@ public class CheckInHistory extends AppCompatActivity {
                         Log.e("Key Value: ", dataSnapshot.getKey());
                         Log.e("History: ", dataSnapshot.getValue().toString());
                         CheckInData h = dataSnapshot.getValue(CheckInData.class);
-
                         historyList.add(h);
                     }
                     adapter = new HistoryAdapter(CheckInHistory.this, historyList);
@@ -76,8 +75,6 @@ public class CheckInHistory extends AppCompatActivity {
                 } else {
                     noHistory.setVisibility(TextView.VISIBLE);
                 }
-
-
             }
 
             @Override

@@ -57,7 +57,6 @@ public class CheckInCamera extends AppCompatActivity implements ZXingScannerView
         ScannerView = new ZXingScannerView(this);
         contentFrame.addView(ScannerView);
 
-
     }
 
     @Override
@@ -65,8 +64,6 @@ public class CheckInCamera extends AppCompatActivity implements ZXingScannerView
         // Get Date & Time
         final String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
         final String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
-
-        //String id = currentDate + " " + currentTime;
 
         /* String to split. */
         String res = result.getText();
@@ -76,17 +73,11 @@ public class CheckInCamera extends AppCompatActivity implements ZXingScannerView
 
         boolean valid = res.contains(delimiter);
 
-        //Todo: Fix valid checking QR Code
-        if(!valid){
+        if(!valid){     // Check if QR Code is valid
             temp = res.split(delimiter);
             String identifier = temp[0];
             Log.e("Identifier", identifier);
             final String location = temp[1];
-
-
-
-        /*CheckInFragment.result.setText(currentDate);
-        CheckInFragment.identifierResult.setText(currentTime);*/
 
             if(identifier.equals("WS-CI")){
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -100,14 +91,12 @@ public class CheckInCamera extends AppCompatActivity implements ZXingScannerView
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         final String temperature = input.getText().toString();
-                        //CheckInData checkIn = new CheckInData(location, currentDate, currentTime);
                         CheckInData checkIn = new CheckInData(location, currentDate, currentTime, temperature);
                         databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
                         String id = databaseReference.push().getKey();
                         databaseReference.child("Check-In History").child(id).setValue(checkIn).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                //Toast.makeText(HomeActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
                                 setSummary(location, currentDate, currentTime, temperature);
                                 onBackPressed();
                                 Intent intent = new Intent(CheckInCamera.this, CheckInSummary.class);
@@ -148,18 +137,10 @@ public class CheckInCamera extends AppCompatActivity implements ZXingScannerView
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
-                    //onBackPressed();
                 }
             });
             builder.show();
         }
-
-
-
-
-
-
-
     }
 
     @Override

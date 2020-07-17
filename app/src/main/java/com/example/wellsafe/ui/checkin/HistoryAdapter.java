@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder> {
 
-    private String[] checkinHistory;
     ArrayList<CheckInData> historyList = new ArrayList<>();
     Context c;
 
@@ -38,7 +37,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     }
 
     public static class HistoryViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
         TextView location;
         TextView dateTime;
         TextView temperature;
@@ -57,10 +55,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(HistoryViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        //holder.textView.setText(checkinHistory[position]);
-
+        // get element from your dataset at this position
+        // replace the contents of the view with that element
         CheckInData history = historyList.get(position);
         String date = history.getDate();
         String time = history.getTime();
@@ -71,7 +67,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
+    // Return the size of arraylist
     @Override
     public int getItemCount() {
         return historyList.size();
