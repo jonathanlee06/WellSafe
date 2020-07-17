@@ -69,7 +69,7 @@ public class StatsFragment extends Fragment {
         renderData();*/
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        List<String> xAxisValues = new ArrayList<>(Arrays.asList("0", "2/7", "3/7", "4/7", "5/7", "6/7", "7/7"));
+        List<String> xAxisValues = new ArrayList<>(Arrays.asList("0", "11/7", "12/7", "13/7", "14/7", "15/7", "16/7"));
         List<Entry> incomeEntries = getCases();
         dataSets = new ArrayList<>();
         LineDataSet set1;
@@ -122,7 +122,7 @@ public class StatsFragment extends Fragment {
 
         LineData data = new LineData(dataSets);
         lineChart.setData(data);
-        lineChart.animateX(1000);
+        lineChart.animateX(500);
         lineChart.invalidate();
         lineChart.getLegend().setEnabled(false);
         lineChart.getDescription().setEnabled(false);
@@ -206,12 +206,12 @@ public class StatsFragment extends Fragment {
     private List<Entry> getCases() {
         ArrayList<Entry> incomeEntries = new ArrayList<>();
 
-        incomeEntries.add(new Entry(1, 83));
-        incomeEntries.add(new Entry(2, 79));
-        incomeEntries.add(new Entry(3, 74));
-        incomeEntries.add(new Entry(4, 75));
-        incomeEntries.add(new Entry(5, 69));
-        incomeEntries.add(new Entry(6, 70));
+        incomeEntries.add(new Entry(1, 64));
+        incomeEntries.add(new Entry(2, 74));
+        incomeEntries.add(new Entry(3, 79));
+        incomeEntries.add(new Entry(4, 77));
+        incomeEntries.add(new Entry(5, 81));
+        incomeEntries.add(new Entry(6, 74));
         return incomeEntries.subList(0, 6);
     }
 }

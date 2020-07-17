@@ -296,7 +296,7 @@
                             android:layout_marginBottom="30dp"
                             android:fontFamily="@font/product_sans_regular"
                             android:textAlignment="center"
-                            android:text="Total Active"
+                            android:text="Active Cases Trend"
                             android:textSize="20dp" />
 
                         <com.github.mikephil.charting.charts.LineChart
