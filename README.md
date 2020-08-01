@@ -34,8 +34,8 @@ This project is built using Android Studio 4.0 & Java. You can view the source c
 ## :briefcase: API
 * [COVID-19 API](https://github.com/nat236919/covid19-api) (This API was chosen because it offers Malaysian statistics & update daily)
 
-## Author
+## :octocat: Author
 [Jonathan Lee](https://jonathan-lee.me)
 
-## Licenses
+## :bookmark_tabs: Licenses
 [MIT License](https://github.com/jonathanlee06/WellSafe/blob/master/LICENSE)
