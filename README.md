@@ -14,7 +14,7 @@ WellSafe is a COVID-19 Safety Measures Monitoring App developed by [Jonathan Lee
     >This application was developed and tested on Android 10
 
 ## :arrow_down: Download
-
+[v0.1 Alpha](https://github.com/jonathanlee06/WellSafe/releases/tag/v0.1-alpha)
 
 ## :hammer: Building the project
 This project is built using Android Studio 4.0 & Java. You can view the source code of the project using Android Studio by following these steps:
@@ -34,3 +34,6 @@ This project is built using Android Studio 4.0 & Java. You can view the source c
 
 ## Author
 [Jonathan Lee](https://jonathan-lee.me)
+
+## Licenses
+[MIT License](https://github.com/jonathanlee06/WellSafe/blob/master/LICENSE)
