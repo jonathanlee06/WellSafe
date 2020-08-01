@@ -1,4 +1,6 @@
 # WellSafe :blue_heart:
+[<img src="https://github.com/jonathanlee06/WellSafe/blob/master/app/src/main/res/drawable/wellsafe.png" alt="drawing" width="200"/>](https://github.com/jonathanlee06/WellSafe/blob/master/app/src/main/res/drawable/wellsafe.png)
+<!--- ![alt text](https://github.com/jonathanlee06/WellSafe/blob/master/app/src/main/res/drawable/wellsafe.png =200x200) --->
 WellSafe is a COVID-19 Safety Measures Monitoring App developed by [Jonathan Lee](https://www.github.com/jonathanlee06) using Android Studio for school assignment project. The aim of the application is to help reduce human contact during check-in process at campus.
 
 ## :bulb: Features
