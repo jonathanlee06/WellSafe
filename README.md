@@ -1,14 +1,6 @@
 # WellSafe :blue_heart:
 WellSafe is a COVID-19 Safety Measures Monitoring App developed by [Jonathan Lee](https://www.github.com/jonathanlee06) using Android Studio for school assignment project. The aim of the application is to help reduce human contact during check-in process at campus.
 
-## Table of Contents
-* [Features](#features)
-* [Hardware Requirements](#hardware-requirements)
-* [Download](#download)
-* [Building the project](#building-the-project)
-* [External Libraries](#external-libraries)
-* [API](#api)
-
 ## :bulb: Features
 | Name | Description | Status | Note |
 | :-------------: | :----------: | :-------------: | :----------: |
