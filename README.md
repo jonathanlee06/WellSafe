@@ -38,4 +38,4 @@ This project is built using Android Studio 4.0 & Java. You can view the source c
 [Jonathan Lee](https://jonathan-lee.me)
 
 ## :bookmark_tabs: Licenses
-[MIT License](https://github.com/jonathanlee06/WellSafe/blob/master/LICENSE)
+This project is licensed under the MIT license. See the [LICENSE](https://github.com/jonathanlee06/WellSafe/blob/master/LICENSE) file for more info.
