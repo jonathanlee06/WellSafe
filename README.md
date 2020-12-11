@@ -1,7 +1,8 @@
 # WellSafe :blue_heart:
 [<img src="https://github.com/jonathanlee06/WellSafe/blob/master/app/src/main/res/drawable/wellsafe.png" alt="drawing" width="200"/>](https://github.com/jonathanlee06/WellSafe/blob/master/app/src/main/res/drawable/wellsafe.png)
 <!--- ![alt text](https://github.com/jonathanlee06/WellSafe/blob/master/app/src/main/res/drawable/wellsafe.png =200x200) --->
-WellSafe is a COVID-19 Safety Measures Monitoring App developed by [Jonathan Lee](https://www.github.com/jonathanlee06) using Android Studio for school assignment project. The aim of the application is to help reduce human contact during check-in process at campus.
+WellSafe is a COVID-19 Safety Measures Monitoring App developed by [Jonathan Lee](https://www.github.com/jonathanlee06) using Android Studio. The aim of the application is to help reduce human contact during check-in process at any public location.
+
 
 > If you see anything you like, a :star: will be much appreciated!
 
@@ -69,7 +70,7 @@ This project is built using Android Studio 4.0 & Java. You can view the source c
 * [COVID-19 API](https://github.com/nat236919/covid19-api) (This API was chosen because it offers Malaysian statistics & update daily)
 
 ## :page_with_curl: Note
-Although this project is built for a school assignment, I'm planning to continue to maintain it. Feel free to fork this repository to improve this application. If you have any questions regarding this repository, please do not hesitate to contact me [here](mailto:jonathanlee06@outlook.com)
+Although this just a personal project, I'm planning to continue maintaining it. Feel free to fork this repository to improve this application. If you have any questions regarding this repository, please do not hesitate to contact me [here](mailto:jonathanlee06@outlook.com)
 
 ## :octocat: Author
 [Jonathan Lee](https://github.com/jonathanlee06)
