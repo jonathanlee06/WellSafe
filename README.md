@@ -70,7 +70,7 @@ This project is built using Android Studio 4.0 & Java. You can view the source c
 * [COVID-19 API](https://github.com/nat236919/covid19-api) (This API was chosen because it offers Malaysian statistics & update daily)
 
 ## :page_with_curl: Note
-Although this just a personal project, I'm planning to continue maintaining it. Feel free to fork this repository to improve this application. If you have any questions regarding this repository, please do not hesitate to contact me [here](mailto:jonathanlee06@outlook.com)
+Although this just an assignment project, I'm planning to continue maintaining it. Feel free to fork this repository to improve this application. If you have any questions regarding this repository, please do not hesitate to contact me [here](mailto:jonathanlee06@outlook.com)
 
 ## :octocat: Author
 [Jonathan Lee](https://github.com/jonathanlee06)
