@@ -4,23 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="@drawable/login"
     tools:context=".SignUpActivity">
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/login_view"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/login" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
+        android:padding="30dp"
         android:orientation="vertical"
         >
 
@@ -28,7 +18,7 @@
             android:id="@+id/logo"
             android:layout_width="200dp"
             android:layout_height="200dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="100dp"
             android:layout_gravity="center"
             android:layout_alignParentTop="true"
             android:src="@drawable/wellsafe"
@@ -36,11 +26,10 @@
 
         <EditText
             android:id="@+id/fullNameField"
-            android:layout_width="330dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_alignParentLeft="true"
-
             android:layout_gravity="center"
             android:ems="10"
             android:inputType="textPersonName"
@@ -56,7 +45,7 @@
 
         <EditText
             android:id="@+id/emailField"
-            android:layout_width="330dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_alignParentLeft="true"
@@ -75,7 +64,7 @@
 
         <EditText
             android:id="@+id/passwordField"
-            android:layout_width="330dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/emailField"
             android:layout_below="@id/emailField"
@@ -92,7 +81,7 @@
         </EditText>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center"
@@ -138,7 +127,7 @@
 
         <Button
             android:id="@+id/signupButton"
-            android:layout_width="330dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/passwordField"
             android:layout_below="@id/passwordField"
@@ -153,13 +142,14 @@
 
         <TextView
             android:id="@+id/loginText"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/loginButton"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="@string/login_text"
+            android:textAlignment="center"
             />
 
     </LinearLayout>
