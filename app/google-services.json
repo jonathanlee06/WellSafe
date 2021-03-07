@@ -15,6 +15,43 @@
       },
       "oauth_client": [
         {
+          "client_id": "409929402160-uimavh6pc6dvb000t4l2hutsc4ganh3k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wellsafe",
+            "certificate_hash": "ee5c8411711282433beb8afa06da106e68bf0833"
+          }
+        },
+        {
+          "client_id": "409929402160-h4t6bhka8eccb5ei1ub10vnm8q05bu5q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMaZ3SBbYh-Iqc63C3CoH5sO03RKlwcyw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "409929402160-h4t6bhka8eccb5ei1ub10vnm8q05bu5q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:409929402160:android:add17655f1b10734a12af5",
+        "android_client_info": {
+          "package_name": "com.jonathanlee.wellsafe"
+        }
+      },
+      "oauth_client": [
+        {
           "client_id": "409929402160-h4t6bhka8eccb5ei1ub10vnm8q05bu5q.apps.googleusercontent.com",
           "client_type": 3
         }

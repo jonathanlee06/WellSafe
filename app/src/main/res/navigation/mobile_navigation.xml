@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.wellsafe.ui.home.HomeFragment"
+        android:name="com.jonathanlee.wellsafe.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_stats"
-        android:name="com.example.wellsafe.ui.stats.StatsFragment"
+        android:name="com.jonathanlee.wellsafe.ui.stats.StatsFragment"
         android:label="@string/menu_stats"
         tools:layout="@layout/fragment_stats" />
 
     <fragment
         android:id="@+id/nav_checkin"
-        android:name="com.example.wellsafe.ui.checkin.CheckInFragment"
+        android:name="com.jonathanlee.wellsafe.ui.checkin.CheckInFragment"
         android:label="@string/menu_checkin"
         tools:layout="@layout/fragment_checkin" />
 
     <fragment
         android:id="@+id/nav_profile"
-        android:name="com.example.wellsafe.ui.profile.ProfileFragment"
+        android:name="com.jonathanlee.wellsafe.ui.profile.ProfileFragment"
         android:label="@string/menu_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>
