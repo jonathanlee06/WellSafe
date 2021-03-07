@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.wellsafe">
+    package="com.jonathanlee.wellsafe">
 
     <application
         android:allowBackup="true"
@@ -10,19 +10,19 @@
         android:roundIcon="@mipmap/wellsafe_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.checkin.CheckInSummary"></activity>
-        <activity android:name=".ui.profile.EditProfile" />
+        <activity android:name="com.jonathanlee.wellsafe.ui.checkin.CheckInSummary"></activity>
+        <activity android:name="com.jonathanlee.wellsafe.ui.profile.EditProfile" />
         <activity
-            android:name=".ui.checkin.CheckInHistory"
+            android:name="com.jonathanlee.wellsafe.ui.checkin.CheckInHistory"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.checkin.CheckInCamera"
+            android:name="com.jonathanlee.wellsafe.ui.checkin.CheckInCamera"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".HomeActivity"
+            android:name="com.jonathanlee.wellsafe.HomeActivity"
             android:label="@string/title_activity_home" />
         <activity
-            android:name=".SplashActivity"
+            android:name="com.jonathanlee.wellsafe.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,10 +31,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LogInActivity"
+            android:name="com.jonathanlee.wellsafe.LogInActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SignUpActivity"
+            android:name="com.jonathanlee.wellsafe.SignUpActivity"
             android:screenOrientation="portrait" />
     </application>
 
