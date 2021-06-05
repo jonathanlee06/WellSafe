@@ -7,7 +7,7 @@ WellSafe is a COVID-19 Safety Measures Monitoring App developed by [Jonathan Lee
 > If you see anything you like, a :star: will be much appreciated!
 
 ## :arrow_down: Download
-[v0.1 Alpha](https://github.com/jonathanlee06/WellSafe/releases/tag/v0.1-alpha)
+[Download APK](https://github.com/jonathanlee06/WellSafe/releases/)
 
 ## :bulb: Features
 | Name | Description | Status | Note |
