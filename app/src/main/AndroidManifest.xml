@@ -6,7 +6,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/wellsafe_logo"
-        android:label="@string/app_name"
+        android:label="${appName}"
         android:roundIcon="@mipmap/wellsafe_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -22,7 +22,7 @@
             android:name="com.jonathanlee.wellsafe.HomeActivity"
             android:label="@string/title_activity_home" />
         <activity
-            android:name="com.jonathanlee.wellsafe.SplashActivity"
+            android:name="com.jonathanlee.wellsafe.ui.splash.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,10 +31,20 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.jonathanlee.wellsafe.SplashActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name="com.jonathanlee.wellsafe.LogInActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.jonathanlee.wellsafe.SignUpActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.jonathanlee.wellsafe.user.register.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.jonathanlee.wellsafe.user.signin.SignInActivity"
             android:screenOrientation="portrait" />
     </application>
 
